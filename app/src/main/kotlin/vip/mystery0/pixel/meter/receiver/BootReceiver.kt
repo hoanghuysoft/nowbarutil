@@ -6,15 +6,15 @@ import android.content.Intent
 import android.util.Log
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import com.kakao.taxi.data.repository.ThermalRepository
-import com.kakao.taxi.service.ThermalMonitorService
+import com.kakao.taxi.data.repository.OrderRepository
+import com.kakao.taxi.service.OrderTrackingService
 
 class BootReceiver : BroadcastReceiver(), KoinComponent {
     companion object {
         private const val TAG = "BootReceiver"
     }
 
-    private val repository: ThermalRepository by inject()
+    private val repository: OrderRepository by inject()
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != Intent.ACTION_BOOT_COMPLETED &&
@@ -27,7 +27,7 @@ class BootReceiver : BroadcastReceiver(), KoinComponent {
         if (isAutoStart) {
             Log.i(TAG, "boot completed, starting service")
             try {
-                val serviceIntent = Intent(context, ThermalMonitorService::class.java)
+                val serviceIntent = Intent(context, OrderTrackingService::class.java)
                 context.startForegroundService(serviceIntent)
             } catch (e: Exception) {
                 Log.e(TAG, "failed to start foreground service on boot", e)

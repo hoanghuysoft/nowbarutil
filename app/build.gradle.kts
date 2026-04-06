@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val packageName = "com.kakao.taxi"
@@ -88,6 +89,12 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.zhanghai.preference)
     implementation(libs.skydoves.colorpicker)
+
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx)
+    implementation(libs.okhttp)
+    implementation(libs.kotlinx.serialization.json)
 }
 
 apply(from = rootProject.file("signing.gradle"))

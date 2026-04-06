@@ -8,10 +8,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import com.kakao.taxi.R
-import com.kakao.taxi.data.repository.ThermalRepository
+import com.kakao.taxi.data.repository.OrderRepository
 
 class NotificationTileService : TileService() {
-    private val repository: ThermalRepository by inject()
+    private val repository: OrderRepository by inject()
     private val scope = CoroutineScope(Dispatchers.Main)
     private var job: Job? = null
 

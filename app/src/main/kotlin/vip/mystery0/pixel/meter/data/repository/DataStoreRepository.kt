@@ -59,6 +59,9 @@ class DataStoreRepository(private val dataStore: DataStore<Preferences>) {
         val KEY_OLED_THEME = booleanPreferencesKey("key_oled_theme")
         val KEY_COMPACT_SPEED_TEXT = booleanPreferencesKey("key_compact_speed_text")
         val KEY_BLANK_NOTIFICATION = booleanPreferencesKey("key_blank_notification")
+        val KEY_API_KEY = stringPreferencesKey("key_api_key")
+        val KEY_TRACKED_ORDER_ID = stringPreferencesKey("key_tracked_order_id")
+        val KEY_POLLING_INTERVAL = longPreferencesKey("key_polling_interval")
     }
 
     val isLiveUpdateEnabled: Flow<Boolean> = dataStore.data
@@ -403,6 +406,39 @@ class DataStoreRepository(private val dataStore: DataStore<Preferences>) {
             if (enabled) {
                 preferences[KEY_LIVE_UPDATE] = false
             }
+        }
+    }
+
+    val apiKey: Flow<String> = dataStore.data
+        .map { preferences ->
+            preferences[KEY_API_KEY] ?: ""
+        }
+
+    suspend fun setApiKey(key: String) {
+        dataStore.edit { preferences ->
+            preferences[KEY_API_KEY] = key
+        }
+    }
+
+    val trackedOrderId: Flow<String> = dataStore.data
+        .map { preferences ->
+            preferences[KEY_TRACKED_ORDER_ID] ?: ""
+        }
+
+    suspend fun setTrackedOrderId(id: String) {
+        dataStore.edit { preferences ->
+            preferences[KEY_TRACKED_ORDER_ID] = id
+        }
+    }
+
+    val pollingInterval: Flow<Long> = dataStore.data
+        .map { preferences ->
+            preferences[KEY_POLLING_INTERVAL] ?: 30000L
+        }
+
+    suspend fun setPollingInterval(interval: Long) {
+        dataStore.edit { preferences ->
+            preferences[KEY_POLLING_INTERVAL] = interval.coerceAtLeast(10_000L)
         }
     }
 }

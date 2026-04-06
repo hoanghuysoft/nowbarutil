@@ -17,10 +17,17 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.IconCompat
 import com.kakao.taxi.MainActivity
 import com.kakao.taxi.R
-import com.kakao.taxi.data.source.ThermalData
-import java.util.Locale
 import kotlin.math.roundToInt
 
+/**
+ * Builds foreground service notifications for order tracking.
+ *
+ * Supports two display modes:
+ * - **Live Update (Samsung Now Bar)**: Uses `setShortCriticalText` to push the latest
+ *   order status directly into the One UI Now Bar pill.
+ * - **Standard Bitmap Icon**: Renders a compact status abbreviation onto the notification
+ *   small icon bitmap.
+ */
 class NotificationHelper(private val context: Context) {
     companion object {
         const val CHANNEL_ID = "net_monitor_silent"
@@ -37,14 +44,12 @@ class NotificationHelper(private val context: Context) {
             notificationManager.createNotificationChannelGroup(group)
 
             // IMPORTANCE_DEFAULT is required for Samsung Now Bar (Live Notification).
-            // IMPORTANCE_LOW will silently suppress the notification and prevent
-            // One UI from promoting it to the Now Bar pill.
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 context.getString(R.string.notification_channel_name),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = "Shows real-time battery temperature in status bar"
+                description = "Shows real-time order tracking status in status bar"
                 setShowBadge(false)
                 setGroup(CHANNEL_ID)
                 setSound(null, null)
@@ -54,7 +59,6 @@ class NotificationHelper(private val context: Context) {
         }
     }
 
-    // Icon generation — render at higher res for clarity
     private val size =
         (context.resources.displayMetrics.density * 24).roundToInt().coerceAtLeast(48)
     private val bitmap = createBitmap(size, size)
@@ -77,21 +81,21 @@ class NotificationHelper(private val context: Context) {
     }
 
     /**
-     * Builds the foreground service notification with battery temperature.
+     * Builds a notification displaying the current order tracking status.
      *
-     * @param thermalData Current battery temperature reading.
-     * @param isLiveUpdate If true, uses Samsung's `setShortCriticalText` and
-     *   `setRequestPromotedOngoing` APIs to push temperature into the Now Bar pill.
-     *   If false, renders a custom bitmap icon with the temperature value.
-     * @param isNotificationEnabled Whether the notification icon should show live data.
-     * @param textSize Relative text size for the bitmap icon value (0.0–1.0).
-     * @param unitSize Relative text size for the bitmap icon unit label (0.0–1.0).
-     * @param useCustomColor Whether to apply a custom accent color to the notification.
+     * @param statusText The latest status text of the tracked order (e.g. "Đang giao hàng").
+     * @param orderCode The tracked order's express ID for context.
+     * @param isLiveUpdate If true, pushes to Samsung Now Bar.
+     * @param isNotificationEnabled Whether the notification should show live data.
+     * @param textSize Relative text size for the bitmap icon (0.0–1.0).
+     * @param unitSize Relative text size for the secondary line (0.0–1.0).
+     * @param useCustomColor Whether to apply a custom accent color.
      * @param color The custom accent color (ARGB int).
-     * @param isBlank If true, strips all content text for a minimalist status bar icon.
+     * @param isBlank If true, strips all content text for a minimalist icon.
      */
     fun buildNotification(
-        thermalData: ThermalData,
+        statusText: String?,
+        orderCode: String?,
         isLiveUpdate: Boolean,
         isNotificationEnabled: Boolean,
         textSize: Float = 0.60f,
@@ -132,51 +136,68 @@ class NotificationHelper(private val context: Context) {
             builder.setContentTitle(context.getString(R.string.notification_content_title))
         }
 
-        if (!isNotificationEnabled) {
+        if (!isNotificationEnabled || statusText == null) {
             if (!isBlank) {
                 builder.setContentText(context.getString(R.string.notification_content_text))
             }
             return builder.build()
         }
 
-        // Format temperature for display
-        val tempString = String.format(Locale.US, "%.1f", thermalData.temperatureCelsius)
-        val fullText = "$tempString°C"
+        // Compact status for Now Bar — truncate if too long
+        val nowBarText = if (statusText.length > 30) {
+            statusText.take(27) + "..."
+        } else {
+            statusText
+        }
 
         if (isLiveUpdate) {
             // ── Samsung Now Bar (Live Notification) Mode ──
-            // setShortCriticalText: pushes compact text into the One UI Now Bar pill.
-            // setRequestPromotedOngoing: tells One UI to promote this as a Live activity.
-            // These are Samsung-specific NotificationCompat extensions that are no-ops
-            // on non-Samsung devices but are REQUIRED for the Now Bar to appear.
             if (!isBlank) {
-                builder.setContentText("🌡️ $fullText")
+                val displayText = if (orderCode != null) "📦 $statusText" else statusText
+                builder.setContentText(displayText)
             }
-            builder.setShortCriticalText(fullText)
+            builder.setShortCriticalText(nowBarText)
                 .setRequestPromotedOngoing(true)
         } else {
             // ── Standard Bitmap Icon Mode ──
-            // Renders the temperature value and unit directly onto a bitmap
-            // that replaces the small notification icon.
+            // Draw a short status abbreviation on the icon
             bitmap.eraseColor(Color.TRANSPARENT)
             val cx = size / 2f
-            val cyValue = size * 0.5f
-            val cyUnit = size * 0.95f
 
             textPaint.textSize = size * textSize
             unitPaint.textSize = size * unitSize
 
-            canvas.drawText(tempString, cx, cyValue, textPaint)
-            canvas.drawText("°C", cx, cyUnit, unitPaint)
+            // Use first 2-3 chars as abbreviation for the icon
+            val abbr = getStatusAbbreviation(statusText)
+            canvas.drawText(abbr, cx, size * 0.55f, textPaint)
+            canvas.drawText("📦", cx, size * 0.95f, unitPaint)
 
             val smallIcon = IconCompat.createWithBitmap(bitmap)
 
             if (!isBlank) {
-                builder.setContentText("🌡️ $fullText")
+                builder.setContentText("📦 $statusText")
             }
             builder.setSmallIcon(smallIcon)
         }
 
         return builder.build()
+    }
+
+    /**
+     * Creates a short abbreviation from an order status for the bitmap icon.
+     * Vietnamese statuses are common so we handle them specifically.
+     */
+    private fun getStatusAbbreviation(status: String): String {
+        return when {
+            status.contains("thành công", ignoreCase = true) -> "✓"
+            status.contains("giao hàng", ignoreCase = true) -> "🚚"
+            status.contains("trung chuyển", ignoreCase = true) -> "→"
+            status.contains("kho", ignoreCase = true) -> "📦"
+            status.contains("lấy hàng", ignoreCase = true) -> "↑"
+            status.contains("chuẩn bị", ignoreCase = true) -> "⏳"
+            status.contains("delivered", ignoreCase = true) -> "✓"
+            status.contains("transit", ignoreCase = true) -> "→"
+            else -> status.take(2).uppercase()
+        }
     }
 }

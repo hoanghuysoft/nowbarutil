@@ -1,274 +1,334 @@
 package com.kakao.taxi
 
 import android.Manifest
-import android.content.Context
+import android.app.ActivityManager
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.GpsFixed
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
-import com.kakao.taxi.data.source.ThermalData
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.kakao.taxi.data.model.Order
+import com.kakao.taxi.data.model.OrderDetail
+import com.kakao.taxi.data.model.TrackingEvent
 import com.kakao.taxi.ui.MainViewModel
 import com.kakao.taxi.ui.settings.SettingsActivity
-import com.kakao.taxi.ui.theme.PixelPulseTheme
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<MainViewModel>()
+
+    private val notificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { _ -> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+
         setContent {
-            val isOledTheme by viewModel.isOledThemeEnabled.collectAsState(initial = false)
-            PixelPulseTheme(isOledTheme = isOledTheme) {
-                HomeScreen()
+            MaterialTheme(
+                colorScheme = MaterialTheme.colorScheme
+            ) {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    MainScreen(
+                        onOpenSettings = {
+                            startActivity(Intent(this, SettingsActivity::class.java))
+                        }
+                    )
+                }
             }
         }
     }
 
-    @Composable
-    fun HomeScreen() {
-        val context = LocalContext.current
-        val thermal by viewModel.currentThermal.collectAsState()
-        val isServiceRunning by viewModel.isServiceRunning.collectAsState()
-        val isOverlayEnabled by viewModel.isOverlayEnabled.collectAsState()
-        val isNotificationEnabled by viewModel.isNotificationEnabled.collectAsState()
-        val isHideFromRecents by viewModel.isHideFromRecents.collectAsState(initial = false)
-        val serviceError by viewModel.serviceStartError.collectAsState()
-        val isOledTheme by viewModel.isOledThemeEnabled.collectAsState(initial = false)
+    override fun onResume() {
+        super.onResume()
+        // Apply hide-from-recents if needed
+        val vm: MainViewModel by lazy {
+            androidx.lifecycle.ViewModelProvider(this)[MainViewModel::class.java]
+        }
+    }
+}
 
-        LaunchedEffect(isHideFromRecents) {
-            val activityManager =
-                context.getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager
-            val tasks = activityManager.appTasks
-            if (tasks.isNotEmpty()) {
-                tasks[0].setExcludeFromRecents(isHideFromRecents)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScreen(
+    viewModel: MainViewModel = viewModel(),
+    onOpenSettings: () -> Unit
+) {
+    val orders by viewModel.orders.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
+    val isMonitoring by viewModel.isMonitoring.collectAsState()
+    val trackedOrderId by viewModel.trackedOrderId.collectAsState()
+    val apiKey by viewModel.apiKey.collectAsState()
+    val selectedOrderDetail by viewModel.selectedOrderDetail.collectAsState()
+    val isBottomSheetVisible by viewModel.isBottomSheetVisible.collectAsState()
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
+    var showAddDialog by rememberSaveable { mutableStateOf(false) }
+
+    // Show errors via snackbar
+    LaunchedEffect(error) {
+        error?.let {
+            snackbarHostState.showSnackbar(it)
+            viewModel.clearError()
+        }
+    }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        topBar = {
+            TopAppBar(
+                title = { Text("Nowbar Tracker", fontWeight = FontWeight.Bold) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+                actions = {
+                    IconButton(onClick = { viewModel.refreshOrders() }) {
+                        Icon(Icons.Filled.Refresh, contentDescription = "Refresh")
+                    }
+                    IconButton(onClick = onOpenSettings) {
+                        Icon(Icons.Filled.Settings, contentDescription = "Settings")
+                    }
+                }
+            )
+        },
+        floatingActionButton = {
+            Column(horizontalAlignment = Alignment.End) {
+                // Service start/stop button
+                ExtendedFloatingActionButton(
+                    onClick = {
+                        if (isMonitoring) viewModel.stopService()
+                        else viewModel.startService()
+                    },
+                    icon = {
+                        Icon(
+                            if (isMonitoring) Icons.Filled.Stop else Icons.Filled.PlayArrow,
+                            contentDescription = null
+                        )
+                    },
+                    text = { Text(if (isMonitoring) "Stop" else "Track") },
+                    containerColor = if (isMonitoring) MaterialTheme.colorScheme.error
+                    else MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                // Add order button
+                ExtendedFloatingActionButton(
+                    onClick = { showAddDialog = true },
+                    icon = { Icon(Icons.Filled.Add, contentDescription = null) },
+                    text = { Text("Add Order") },
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                )
             }
         }
-
-        // Permission Launcher
-        val notificationPermissionLauncher = rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.RequestPermission(),
-            onResult = { isGranted ->
-                if (isGranted) {
-                    viewModel.clearError()
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
+            if (apiKey.isBlank()) {
+                // No API key configured
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(32.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        "🔑",
+                        fontSize = 48.sp
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        "API Key Required",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        "Go to Settings and enter your express.io.vn API key to get started.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    TextButton(onClick = onOpenSettings) {
+                        Text("Open Settings")
+                    }
                 }
-            }
-        )
-
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(stringResource(R.string.app_name)) },
-                    actions = {
-                        IconButton(onClick = {
-                            val intent = Intent(context, SettingsActivity::class.java)
-                            context.startActivity(intent)
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Settings,
-                                contentDescription = "Settings"
+            } else if (orders.isEmpty() && !isLoading) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(32.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("📦", fontSize = 48.sp)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        "No Orders",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        "Tap the + button to add your first tracking order.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            } else {
+                LazyColumn(
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // Tracked order banner
+                    if (trackedOrderId.isNotBlank()) {
+                        item {
+                            TrackedOrderBanner(
+                                trackedOrderId = trackedOrderId,
+                                isMonitoring = isMonitoring
                             )
                         }
                     }
-                )
+
+                    items(orders, key = { it.expressId }) { order ->
+                        OrderCard(
+                            order = order,
+                            isTracked = order.expressId == trackedOrderId,
+                            onTap = { viewModel.showOrderDetail(order) },
+                            onTrack = { viewModel.trackOnNowBar(order) },
+                            onDelete = { viewModel.deleteOrder(order.expressId, order.partner) }
+                        )
+                    }
+
+                    // Bottom spacing for FAB
+                    item { Spacer(modifier = Modifier.height(140.dp)) }
+                }
             }
-        ) { padding ->
-            LazyColumn(
-                modifier = Modifier
-                    .padding(padding)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+
+            // Loading overlay
+            AnimatedVisibility(
+                visible = isLoading,
+                enter = fadeIn(),
+                exit = fadeOut(),
+                modifier = Modifier.align(Alignment.Center)
             ) {
-                item {
-                    ThermalDashboardCard(thermal)
-                }
+                CircularProgressIndicator()
+            }
+        }
+    }
 
-                if (serviceError != null) {
-                    item {
-                        Text(
-                            stringResource(R.string.title_configuration),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
+    // Add Order Dialog
+    if (showAddDialog) {
+        AddOrderDialog(
+            onDismiss = { showAddDialog = false },
+            onAdd = { code, name ->
+                viewModel.addOrder(code, name)
+                showAddDialog = false
+            }
+        )
+    }
 
-                    item {
-                        Card(
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    serviceError?.first ?: stringResource(R.string.error_unknown),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onErrorContainer
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                ) {
-                                    Spacer(modifier = Modifier.weight(1F))
-                                    Button(onClick = {
-                                        serviceError?.let { (_, action) ->
-                                            if (action == Settings.ACTION_APP_NOTIFICATION_SETTINGS) {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                                    notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                                                } else {
-                                                    val intent = Intent(action)
-                                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    intent.putExtra(
-                                                        Settings.EXTRA_APP_PACKAGE,
-                                                        context.packageName
-                                                    )
-                                                    context.startActivity(intent)
-                                                }
-                                            } else {
-                                                val intent = Intent(action)
-                                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                                intent.data =
-                                                    "package:${context.packageName}".toUri()
-                                                context.startActivity(intent)
-                                                viewModel.clearError()
-                                            }
-                                        }
-                                    }) {
-                                        Text(stringResource(R.string.action_request_fix))
-                                    }
-                                    TextButton(
-                                        onClick = { viewModel.clearError() },
-                                    ) {
-                                        Text(stringResource(R.string.action_dismiss))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                item {
-                    Text(
-                        stringResource(R.string.title_monitor_control),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-
-                item {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = if (isServiceRunning) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant
-                        )
-                    ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    if (isServiceRunning) Icons.Default.Check else Icons.Default.Close,
-                                    contentDescription = null,
-                                    tint = if (isServiceRunning) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                                Spacer(Modifier.width(8.dp))
-                                Text(
-                                    text = if (isServiceRunning) stringResource(R.string.status_monitor_running) else stringResource(
-                                        R.string.status_monitor_stopped
-                                    ),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    color = if (isServiceRunning) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            }
-                            Spacer(Modifier.height(16.dp))
-                            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                                Button(
-                                    onClick = { viewModel.startService() },
-                                    enabled = !isServiceRunning,
-                                    modifier = Modifier.weight(1f)
-                                ) {
-                                    Text(stringResource(R.string.action_start))
-                                }
-                                Button(
-                                    onClick = { viewModel.stopService() },
-                                    enabled = isServiceRunning,
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.error
-                                    ),
-                                    modifier = Modifier.weight(1f)
-                                ) {
-                                    Text(stringResource(R.string.action_stop))
-                                }
-                            }
-                        }
-                    }
-                }
-
-                item {
-                    Text(
-                        stringResource(R.string.title_feature_config),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-
-                item {
-                    ConfigRow(
-                        title = stringResource(R.string.config_enable_overlay),
-                        subtitle = stringResource(R.string.config_enable_overlay_desc),
-                        checked = isOverlayEnabled,
-                        onCheckedChange = { viewModel.setOverlayEnabled(it) }
-                    )
-                }
-
-                item {
-                    ConfigRow(
-                        title = stringResource(R.string.config_enable_notification),
-                        subtitle = stringResource(R.string.config_enable_notification_desc),
-                        checked = isNotificationEnabled,
-                        onCheckedChange = { viewModel.setNotificationEnabled(it) }
-                    )
+    // Bottom Sheet for Order Detail
+    if (isBottomSheetVisible) {
+        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        ModalBottomSheet(
+            onDismissRequest = { viewModel.hideBottomSheet() },
+            sheetState = sheetState
+        ) {
+            if (selectedOrderDetail != null) {
+                OrderDetailSheet(detail = selectedOrderDetail!!)
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
                 }
             }
         }
@@ -276,57 +336,349 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ThermalDashboardCard(thermal: ThermalData) {
+fun TrackedOrderBanner(trackedOrderId: String, isMonitoring: Boolean) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(
+            containerColor = if (isMonitoring) MaterialTheme.colorScheme.primaryContainer
+            else MaterialTheme.colorScheme.surfaceVariant
+        ),
+        shape = RoundedCornerShape(12.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                "BATTERY TEMPERATURE",
-                style = MaterialTheme.typography.labelMedium
+            Icon(
+                Icons.Filled.GpsFixed,
+                contentDescription = null,
+                tint = if (isMonitoring) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.onSurfaceVariant
             )
-            val tempString = String.format(Locale.US, "%.1f°C", thermal.temperatureCelsius)
-            Text(
-                tempString,
-                style = MaterialTheme.typography.displayMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    if (isMonitoring) "Now Bar Active" else "Now Bar Inactive",
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    trackedOrderId,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }
 
 @Composable
-fun ConfigRow(
-    title: String,
-    subtitle: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    enabled: Boolean = true
+fun OrderCard(
+    order: Order,
+    isTracked: Boolean,
+    onTap: () -> Unit,
+    onTrack: () -> Unit,
+    onDelete: () -> Unit
 ) {
-    Row(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+            .clickable(onClick = onTap),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isTracked) MaterialTheme.colorScheme.secondaryContainer
+            else MaterialTheme.colorScheme.surfaceContainerHigh
+        )
     ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(title, style = MaterialTheme.typography.titleMedium)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Partner badge
+            Box(
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(CircleShape)
+                    .background(getPartnerColor(order.partner)),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    order.partner.take(3),
+                    color = Color.White,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    order.itemName ?: order.expressId,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    order.expressId,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    StatusChip(order.status)
+                    if (order.latestStatus != null) {
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            order.latestStatus,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
+            }
+
+            // Actions
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                IconButton(onClick = onTrack, modifier = Modifier.size(36.dp)) {
+                    Icon(
+                        Icons.Filled.GpsFixed,
+                        contentDescription = "Track on Now Bar",
+                        tint = if (isTracked) MaterialTheme.colorScheme.primary
+                        else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+                IconButton(onClick = onDelete, modifier = Modifier.size(36.dp)) {
+                    Icon(
+                        Icons.Filled.Delete,
+                        contentDescription = "Delete",
+                        tint = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun StatusChip(status: String) {
+    val (color, label) = when (status.lowercase()) {
+        "delivered" -> MaterialTheme.colorScheme.tertiary to "Delivered"
+        "in_transit", "transit" -> MaterialTheme.colorScheme.primary to "In Transit"
+        "pending" -> MaterialTheme.colorScheme.secondary to "Pending"
+        "cancelled" -> MaterialTheme.colorScheme.error to "Cancelled"
+        else -> MaterialTheme.colorScheme.outline to status.replaceFirstChar { it.uppercase() }
+    }
+
+    Surface(
+        shape = RoundedCornerShape(4.dp),
+        color = color.copy(alpha = 0.15f)
+    ) {
+        Text(
+            label,
+            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+            style = MaterialTheme.typography.labelSmall,
+            color = color,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
+}
+
+@Composable
+fun OrderDetailSheet(detail: OrderDetail) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 20.dp, vertical = 8.dp)
+    ) {
+        // Header
+        Text(
+            detail.itemName ?: detail.expressId,
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            "${detail.expressId} • ${detail.partner}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        StatusChip(detail.status)
+
+        Spacer(modifier = Modifier.height(20.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            "Tracking History",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Timeline
+        val events = detail.trackingHistory?.reversed() ?: emptyList()
+        if (events.isEmpty()) {
             Text(
-                subtitle,
+                "No tracking events available.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+        } else {
+            events.forEachIndexed { index, event ->
+                TimelineItem(
+                    event = event,
+                    isFirst = index == 0,
+                    isLast = index == events.lastIndex
+                )
+            }
         }
-        Switch(
-            checked = checked,
-            onCheckedChange = onCheckedChange,
-            enabled = enabled
-        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+    }
+}
+
+@Composable
+fun TimelineItem(event: TrackingEvent, isFirst: Boolean, isLast: Boolean) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        // Timeline dot + line
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.width(32.dp)
+        ) {
+            if (!isFirst) {
+                Box(
+                    modifier = Modifier
+                        .width(2.dp)
+                        .height(12.dp)
+                        .background(MaterialTheme.colorScheme.outlineVariant)
+                )
+            } else {
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+            Icon(
+                Icons.Filled.Circle,
+                contentDescription = null,
+                modifier = Modifier.size(10.dp),
+                tint = if (isFirst) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.outlineVariant
+            )
+            if (!isLast) {
+                Box(
+                    modifier = Modifier
+                        .width(2.dp)
+                        .height(40.dp)
+                        .background(MaterialTheme.colorScheme.outlineVariant)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                event.status,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = if (isFirst) FontWeight.SemiBold else FontWeight.Normal
+            )
+            Row {
+                Text(
+                    formatTimestamp(event.time),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                if (event.location != null) {
+                    Text(
+                        " • ${event.location}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+            if (!isLast) Spacer(modifier = Modifier.height(4.dp))
+        }
+    }
+}
+
+@Composable
+fun AddOrderDialog(onDismiss: () -> Unit, onAdd: (code: String, name: String?) -> Unit) {
+    var code by rememberSaveable { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Add Order") },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = code,
+                    onValueChange = { code = it },
+                    label = { Text("Tracking Code *") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Item Name (optional)") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { onAdd(code.trim(), name.trim().ifBlank { null }) },
+                enabled = code.isNotBlank()
+            ) {
+                Text("Add")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
+}
+
+// ── Helpers ──
+
+fun getPartnerColor(partner: String): Color {
+    return when (partner.uppercase()) {
+        "SPX" -> Color(0xFFFF6600)  // Shopee Express orange
+        "GHN" -> Color(0xFF00B14F)  // GHN green
+        "GHTK" -> Color(0xFF1BA8E0) // GHTK blue
+        "JT" -> Color(0xFFE60012)   // J&T red
+        "VTP" -> Color(0xFFE3001B)  // Viettel Post red
+        "BEST" -> Color(0xFF003DA5) // BEST blue
+        "NJV" -> Color(0xFFE31837)  // Ninja Van red
+        else -> Color(0xFF607D8B)   // Default gray
+    }
+}
+
+fun formatTimestamp(epochSeconds: Long): String {
+    return try {
+        val sdf = SimpleDateFormat("dd/MM HH:mm", Locale.getDefault())
+        sdf.format(Date(epochSeconds * 1000))
+    } catch (_: Exception) {
+        ""
     }
 }
