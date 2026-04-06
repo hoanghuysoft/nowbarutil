@@ -1,6 +1,7 @@
 package com.kakao.taxi.data.network
 
 import com.kakao.taxi.data.model.AddOrdersRequest
+import com.kakao.taxi.data.model.AddOrdersResponse
 import com.kakao.taxi.data.model.GenericApiResponse
 import com.kakao.taxi.data.model.OrderDetailResponse
 import com.kakao.taxi.data.model.OrderListResponse
@@ -38,7 +39,7 @@ interface OrderApiService {
 
     /** Adds one or more orders to the user's tracking list. */
     @POST("api/v1/orders")
-    suspend fun addOrders(@Body body: AddOrdersRequest): OrderListResponse
+    suspend fun addOrders(@Body body: AddOrdersRequest): AddOrdersResponse
 
     /** Renames an existing order. */
     @PUT("api/v1/orders/{code}")

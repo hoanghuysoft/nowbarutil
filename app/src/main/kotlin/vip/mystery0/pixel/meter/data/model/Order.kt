@@ -38,6 +38,32 @@ data class GenericApiResponse(
     val message: String? = null
 )
 
+/**
+ * Response from POST /api/v1/orders — different shape from the list endpoint.
+ */
+@Serializable
+data class AddOrdersResponse(
+    val status: String,
+    val code: Int,
+    @SerialName("user_id") val userId: String? = null,
+    val username: String? = null,
+    val data: AddOrdersData? = null,
+    val message: String? = null
+)
+
+@Serializable
+data class AddOrdersData(
+    val added: Int,
+    val orders: List<AddedOrder>
+)
+
+@Serializable
+data class AddedOrder(
+    val code: String,
+    val partner: String,
+    val status: String
+)
+
 // ── Core Domain Models ──
 
 /**
