@@ -43,13 +43,13 @@
             android:theme="@style/Theme.NowbarMeter" />
 
         <service
-            android:name=".service.NetworkMonitorService"
+            android:name=".service.ThermalMonitorService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="specialUse|dataSync">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="network_monitor" />
+                android:value="thermal_monitor" />
         </service>
 
         <service

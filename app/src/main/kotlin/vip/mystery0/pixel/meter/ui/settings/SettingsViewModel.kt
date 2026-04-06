@@ -38,10 +38,12 @@ class SettingsViewModel(
 
     // Notification Settings
     val isNotificationEnabled = repository.isNotificationEnabled
+    val isLiveUpdateEnabled = repository.isLiveUpdateEnabled
     val notificationTextSize = repository.notificationTextSize
     val notificationUnitSize = repository.notificationUnitSize
     val notificationUseCustomColor = repository.notificationUseCustomColor
     val notificationColor = repository.notificationColor
+    val isBlankNotificationEnabled = repository.isBlankNotificationEnabled
 
     // General Settings
     val isHideFromRecents = repository.isHideFromRecents
@@ -92,6 +94,8 @@ class SettingsViewModel(
     fun setOverlayTextSize(size: Float) = repository.setOverlayTextSize(size)
 
     fun setNotificationEnabled(enabled: Boolean) = repository.setNotificationEnabled(enabled)
+    fun setLiveUpdateEnabled(enabled: Boolean) = repository.setLiveUpdateEnabled(enabled)
+    fun setBlankNotificationEnabled(enabled: Boolean) = repository.setBlankNotificationEnabled(enabled)
     
     fun setNotificationTextSize(size: Float) = repository.setNotificationTextSize(size)
     fun setNotificationUnitSize(size: Float) = repository.setNotificationUnitSize(size)

@@ -317,8 +317,10 @@ fun OverlaySection(viewModel: SettingsViewModel) {
 @Composable
 fun NotificationSection(viewModel: SettingsViewModel) {
     val isEnabled by viewModel.isNotificationEnabled.collectAsState(initial = true)
-    val textSize by viewModel.notificationTextSize.collectAsState(initial = 0.50f)
-    val unitSize by viewModel.notificationUnitSize.collectAsState(initial = 0.35f)
+    val isLiveUpdateEnabled by viewModel.isLiveUpdateEnabled.collectAsState(initial = true)
+    val textSize by viewModel.notificationTextSize.collectAsState(initial = 0.60f)
+    val unitSize by viewModel.notificationUnitSize.collectAsState(initial = 0.45f)
+    val isBlankNotificationEnabled by viewModel.isBlankNotificationEnabled.collectAsState(initial = false)
 
     PreferenceCategory(title = { Text(stringResource(R.string.settings_category_notification)) })
     SwitchPreference(
@@ -329,7 +331,23 @@ fun NotificationSection(viewModel: SettingsViewModel) {
     )
 
     if (isEnabled) {
+        SwitchPreference(
+            value = isLiveUpdateEnabled,
+            onValueChange = { viewModel.setLiveUpdateEnabled(it) },
+            enabled = !isBlankNotificationEnabled,
+            title = { Text(stringResource(R.string.config_enable_live_update)) },
+            summary = { Text(stringResource(R.string.config_enable_live_update_desc)) }
+        )
+        SwitchPreference(
+            value = isBlankNotificationEnabled,
+            onValueChange = { viewModel.setBlankNotificationEnabled(it) },
+            enabled = !isLiveUpdateEnabled,
+            title = { Text(stringResource(R.string.settings_blank_notification_title)) },
+            summary = { Text(stringResource(R.string.settings_blank_notification_desc)) }
+        )
+
         SliderPreference(
+            enabled = !isLiveUpdateEnabled,
             value = 0F,
             onValueChange = { },
             sliderValue = textSize,
@@ -340,6 +358,7 @@ fun NotificationSection(viewModel: SettingsViewModel) {
         )
 
         SliderPreference(
+            enabled = !isLiveUpdateEnabled,
             value = 0F,
             onValueChange = { },
             sliderValue = unitSize,

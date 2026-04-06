@@ -54,9 +54,10 @@ class ThermalMonitorService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val initialNotif = notificationHelper.buildNotification(
             thermalData = ThermalData(0f),
+            isLiveUpdate = false,
             isNotificationEnabled = true,
-            textSize = 0.50f,
-            unitSize = 0.35f,
+            textSize = 0.60f,
+            unitSize = 0.45f,
             useCustomColor = false,
             color = 0,
             isBlank = false
@@ -112,16 +113,17 @@ class ThermalMonitorService : Service() {
                 }
 
                 val notification = withContext(Dispatchers.Default) {
+                    val isLiveUpdate = repository.isLiveUpdateEnabled.value
                     val isNotificationEnabled = repository.isNotificationEnabled.value
-                    
                     val textSize = repository.notificationTextSize.value
                     val unitSize = repository.notificationUnitSize.value
                     val useCustomColor = repository.notificationUseCustomColor.value
                     val color = repository.notificationColor.value
+                    val isBlank = repository.isBlankNotificationEnabled.value
 
                     notificationHelper.buildNotification(
-                        thermal, isNotificationEnabled,
-                        textSize, unitSize, useCustomColor, color, isBlank = false
+                        thermal, isLiveUpdate, isNotificationEnabled,
+                        textSize, unitSize, useCustomColor, color, isBlank
                     )
                 }
                 notificationManager.notify(NotificationHelper.NOTIFICATION_ID, notification)

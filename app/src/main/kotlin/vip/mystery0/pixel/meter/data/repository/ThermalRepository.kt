@@ -70,6 +70,12 @@ class ThermalRepository(
     private val _notificationColor = MutableStateFlow(0xFF888888.toInt())
     val notificationColor: StateFlow<Int> = _notificationColor.asStateFlow()
 
+    private val _isLiveUpdateEnabled = MutableStateFlow(true)
+    val isLiveUpdateEnabled: StateFlow<Boolean> = _isLiveUpdateEnabled.asStateFlow()
+
+    private val _isBlankNotificationEnabled = MutableStateFlow(false)
+    val isBlankNotificationEnabled: StateFlow<Boolean> = _isBlankNotificationEnabled.asStateFlow()
+
     private val _isOledThemeEnabled = MutableStateFlow(false)
     val isOledThemeEnabled: StateFlow<Boolean> = _isOledThemeEnabled.asStateFlow()
 
@@ -90,6 +96,8 @@ class ThermalRepository(
                 _isAutoStartServiceEnabled.value = prefs[DataStoreRepository.KEY_AUTO_START_SERVICE] ?: false
                 _notificationUseCustomColor.value = prefs[DataStoreRepository.KEY_NOTIFICATION_USE_CUSTOM_COLOR] ?: false
                 _notificationColor.value = prefs[DataStoreRepository.KEY_NOTIFICATION_COLOR] ?: 0xFF888888.toInt()
+                _isLiveUpdateEnabled.value = prefs[DataStoreRepository.KEY_LIVE_UPDATE] ?: true
+                _isBlankNotificationEnabled.value = prefs[DataStoreRepository.KEY_BLANK_NOTIFICATION] ?: false
                 _isOledThemeEnabled.value = prefs[DataStoreRepository.KEY_OLED_THEME] ?: false
             }
         }
@@ -108,6 +116,8 @@ class ThermalRepository(
         scope.launch { dataStoreRepository.isAutoStartServiceEnabled.collect { _isAutoStartServiceEnabled.value = it } }
         scope.launch { dataStoreRepository.notificationUseCustomColor.collect { _notificationUseCustomColor.value = it } }
         scope.launch { dataStoreRepository.notificationColor.collect { _notificationColor.value = it } }
+        scope.launch { dataStoreRepository.isLiveUpdateEnabled.collect { _isLiveUpdateEnabled.value = it } }
+        scope.launch { dataStoreRepository.isBlankNotificationEnabled.collect { _isBlankNotificationEnabled.value = it } }
         scope.launch { dataStoreRepository.isOledThemeEnabled.collect { _isOledThemeEnabled.value = it } }
     }
 
@@ -125,6 +135,8 @@ class ThermalRepository(
     fun setAutoStartServiceEnabled(enabled: Boolean) { scope.launch { dataStoreRepository.setAutoStartServiceEnabled(enabled) } }
     fun setNotificationUseCustomColor(useCustom: Boolean) { scope.launch { dataStoreRepository.setNotificationUseCustomColor(useCustom) } }
     fun setNotificationColor(color: Int) { scope.launch { dataStoreRepository.setNotificationColor(color) } }
+    fun setLiveUpdateEnabled(enabled: Boolean) { scope.launch { dataStoreRepository.setLiveUpdateEnabled(enabled) } }
+    fun setBlankNotificationEnabled(enabled: Boolean) { scope.launch { dataStoreRepository.setBlankNotificationEnabled(enabled) } }
     fun setOledThemeEnabled(enabled: Boolean) { scope.launch { dataStoreRepository.setOledThemeEnabled(enabled) } }
 
     suspend fun getOverlayPosition(): Pair<Int, Int> {

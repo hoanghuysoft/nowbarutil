@@ -1,0 +1,791 @@
+{
+  "sha": "f8e0221afd46f89b1ffbcb77390f80142bd08fe4",
+  "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/f8e0221afd46f89b1ffbcb77390f80142bd08fe4",
+  "tree": [
+    {
+      "path": ".agentdocs",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f239dd29a79a7a3a2eebefee71464ce1dbfb68fa",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/f239dd29a79a7a3a2eebefee71464ce1dbfb68fa"
+    },
+    {
+      "path": ".agentdocs/architecture",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "727ee91c009015c00aeadac1550c2b10d40a183c",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/727ee91c009015c00aeadac1550c2b10d40a183c"
+    },
+    {
+      "path": ".agentdocs/architecture/data-source-strategy.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "96cc193b8a6d791ba73bff6d965677e00eda7569",
+      "size": 3122,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/96cc193b8a6d791ba73bff6d965677e00eda7569"
+    },
+    {
+      "path": ".agentdocs/architecture/service-lifecycle.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "39af3f2921af313e60469465bf83595b5529631e",
+      "size": 3667,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/39af3f2921af313e60469465bf83595b5529631e"
+    },
+    {
+      "path": ".agentdocs/index.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d0e8f10c19cac2d8d9ab605bc826b331e4f2ba89",
+      "size": 982,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/d0e8f10c19cac2d8d9ab605bc826b331e4f2ba89"
+    },
+    {
+      "path": ".agentdocs/prd",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8157e3e2eb981da3c7373a694d2aeb64fc355992",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/8157e3e2eb981da3c7373a694d2aeb64fc355992"
+    },
+    {
+      "path": ".agentdocs/prd/requirements.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8696dc758f7148f9c7581a16eccf1b48ec3adcae",
+      "size": 7158,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/8696dc758f7148f9c7581a16eccf1b48ec3adcae"
+    },
+    {
+      "path": ".agentdocs/ui",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "65c81477f1f19279dd48bb5cea0d4d38c925f824",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/65c81477f1f19279dd48bb5cea0d4d38c925f824"
+    },
+    {
+      "path": ".agentdocs/ui/design-system.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cdbf33daf40574f8fac307f30d7666904ba4c0e0",
+      "size": 3383,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/cdbf33daf40574f8fac307f30d7666904ba4c0e0"
+    },
+    {
+      "path": ".github",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ba65db911f151cfba611e16338b38e5197b9a9c7",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/ba65db911f151cfba611e16338b38e5197b9a9c7"
+    },
+    {
+      "path": ".github/workflows",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b296d6f8d44d6bb90eb6864038f238a155a5f981",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/b296d6f8d44d6bb90eb6864038f238a155a5f981"
+    },
+    {
+      "path": ".github/workflows/android.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8f7b8a0e39eec0c41ec4ec7ff8dba5512992a7a1",
+      "size": 2886,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/8f7b8a0e39eec0c41ec4ec7ff8dba5512992a7a1"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0649c66822fe53d3680b977df5b5dffbab4ce775",
+      "size": 255,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/0649c66822fe53d3680b977df5b5dffbab4ce775"
+    },
+    {
+      "path": "GEMINI.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31d5bc764e2b1ba7d854b34950e6fbf5af54e505",
+      "size": 5399,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/31d5bc764e2b1ba7d854b34950e6fbf5af54e505"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+      "size": 11357,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9ad436da5d1a0b27f7abf0e00ef0372fff4c0b3a",
+      "size": 4246,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/9ad436da5d1a0b27f7abf0e00ef0372fff4c0b3a"
+    },
+    {
+      "path": "app",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8807b7fa5ec8075cd3b55695c30b011dae598926",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/8807b7fa5ec8075cd3b55695c30b011dae598926"
+    },
+    {
+      "path": "app/.gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "42afabfd2abebf31384ca7797186a27a4b7dbee8",
+      "size": 6,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/42afabfd2abebf31384ca7797186a27a4b7dbee8"
+    },
+    {
+      "path": "app/build.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "34d9b8b2647d3a3c027fd7f9a55a821cc7428a74",
+      "size": 2700,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/34d9b8b2647d3a3c027fd7f9a55a821cc7428a74"
+    },
+    {
+      "path": "app/proguard-rules.pro",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bc70c9ddfab4764bef4de5ac6f7af2691c323bac",
+      "size": 1245,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/bc70c9ddfab4764bef4de5ac6f7af2691c323bac"
+    },
+    {
+      "path": "app/src",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bb4dcd39da89d8141570d3bba464199ab6bbb4d0",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/bb4dcd39da89d8141570d3bba464199ab6bbb4d0"
+    },
+    {
+      "path": "app/src/main",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0575b9b4f0fcb3f137ac06b36bfa28afe5f50c19",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/0575b9b4f0fcb3f137ac06b36bfa28afe5f50c19"
+    },
+    {
+      "path": "app/src/main/AndroidManifest.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "95d026e3852b023ef2192860ad2442b3ae597245",
+      "size": 3781,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/95d026e3852b023ef2192860ad2442b3ae597245"
+    },
+    {
+      "path": "app/src/main/ic_launcher-playstore.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3fbac2fa21f6090444403081e1f535896878af62",
+      "size": 11269,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/3fbac2fa21f6090444403081e1f535896878af62"
+    },
+    {
+      "path": "app/src/main/kotlin",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "aa792135eb9a5bf4c548a415fa92ac8b410f8ff7",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/aa792135eb9a5bf4c548a415fa92ac8b410f8ff7"
+    },
+    {
+      "path": "app/src/main/kotlin/vip",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "19f6b7f9a6d0e15cc51ee2b90f1917def3381bbe",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/19f6b7f9a6d0e15cc51ee2b90f1917def3381bbe"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "6d3ce210787aa20e820563e7acd4f61941b76303",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/6d3ce210787aa20e820563e7acd4f61941b76303"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bfe399c4d762634ecd78011c376ef60741fa3b31",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/bfe399c4d762634ecd78011c376ef60741fa3b31"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4d02891224d44de5c3fa165998dc8d4d83f559dd",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/4d02891224d44de5c3fa165998dc8d4d83f559dd"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/MainActivity.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ee8d946484da43c74d6c4596ce561492058c7d3",
+      "size": 19174,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/2ee8d946484da43c74d6c4596ce561492058c7d3"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/MainApplication.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dc29b347f4a73b338e5edb3f4c66f2a2c3a21441",
+      "size": 631,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/dc29b347f4a73b338e5edb3f4c66f2a2c3a21441"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/data",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f639f26626eab12e865fed7f353990baa2b2deaf",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/f639f26626eab12e865fed7f353990baa2b2deaf"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/data/repository",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ff16bcb0acb4c5c80b262c2b9383007e6355781d",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/ff16bcb0acb4c5c80b262c2b9383007e6355781d"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/data/repository/DataStoreRepository.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "836900a3d31b8f7e280f8454a93900103352ccb5",
+      "size": 14274,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/836900a3d31b8f7e280f8454a93900103352ccb5"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/data/repository/NetworkRepository.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0163570c809328024c26bf1601d465fe0879be84",
+      "size": 23576,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/0163570c809328024c26bf1601d465fe0879be84"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/data/source",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "19a30348c3ff9211873661fd68ad3c09c2f0d01f",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/19a30348c3ff9211873661fd68ad3c09c2f0d01f"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/data/source/ISpeedDataSource.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b302f1091c01d924ad3c36a90a9e478a2da01b2a",
+      "size": 404,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/b302f1091c01d924ad3c36a90a9e478a2da01b2a"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/data/source/impl",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bcb09e12264cd59b9d727dd4aef43864763b1966",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/bcb09e12264cd59b9d727dd4aef43864763b1966"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/data/source/impl/SpeedDataSource.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "99f15190e9d3cdaa24c91924dc8b558f9f120c73",
+      "size": 4703,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/99f15190e9d3cdaa24c91924dc8b558f9f120c73"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/di",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "eef84475f55bbb5195574133ef8198eba6dc2349",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/eef84475f55bbb5195574133ef8198eba6dc2349"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/di/AppModule.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d084fe72eda31ee31313e9b09a5a3486ace872e8",
+      "size": 1133,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/d084fe72eda31ee31313e9b09a5a3486ace872e8"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/receiver",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ba1e93ef4ce1ff363b87cf9a59df9c5082d1e5b5",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/ba1e93ef4ce1ff363b87cf9a59df9c5082d1e5b5"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/receiver/BootReceiver.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c241a20fb835d74cf2aea56a132ebc50f9028813",
+      "size": 1534,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/c241a20fb835d74cf2aea56a132ebc50f9028813"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/service",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "249cf179182def66245dee9891dc99fcb1b6675e",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/249cf179182def66245dee9891dc99fcb1b6675e"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/service/NetworkMonitorService.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b604e3ca7625dacd36e8570bfb459f5af368f3f3",
+      "size": 7590,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/b604e3ca7625dacd36e8570bfb459f5af368f3f3"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/service/NotificationHelper.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "58d3e351669bbf880f981e1d2d402e18104a3216",
+      "size": 7800,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/58d3e351669bbf880f981e1d2d402e18104a3216"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/service/tile",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f1f7dda7deb0ca7a5b6f412226c2bcc7e0da5a86",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/f1f7dda7deb0ca7a5b6f412226c2bcc7e0da5a86"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/service/tile/NotificationTileService.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a5400c20f3c21baf4daaee062e842f102b4a75a2",
+      "size": 1483,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/a5400c20f3c21baf4daaee062e842f102b4a75a2"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/service/tile/OverlayTileService.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "484b9a00d87f1b65dfc4aea45c35bf80f847b280",
+      "size": 1463,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/484b9a00d87f1b65dfc4aea45c35bf80f847b280"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/ui",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0675cc92bc331423982e94c957c9b6807aa1bbe3",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/0675cc92bc331423982e94c957c9b6807aa1bbe3"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/ui/MainViewModel.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fbbddf4882bfeac3093a939558151296cb338261",
+      "size": 4214,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/fbbddf4882bfeac3093a939558151296cb338261"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/ui/overlay",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ba92c6fd83f42358124440a2ee4f0ba6656bc498",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/ba92c6fd83f42358124440a2ee4f0ba6656bc498"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/ui/overlay/OverlayWindow.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f27033bd1e1e4d56c20da32298ce6cde3348a1af",
+      "size": 9112,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/f27033bd1e1e4d56c20da32298ce6cde3348a1af"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/ui/settings",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5c0736459354c53d61f5047de48d786372e81c22",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/5c0736459354c53d61f5047de48d786372e81c22"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/ui/settings/SettingsActivity.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8bc267df899c54031d54030b814e558738314c50",
+      "size": 31087,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/8bc267df899c54031d54030b814e558738314c50"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/ui/settings/SettingsViewModel.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a693cbcabee2505e5a49e15dda4b4d24d24c70bf",
+      "size": 6802,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/a693cbcabee2505e5a49e15dda4b4d24d24c70bf"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/ui/theme",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "918113db0ba544810e10bebae2d5c65530ab2e87",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/918113db0ba544810e10bebae2d5c65530ab2e87"
+    },
+    {
+      "path": "app/src/main/kotlin/vip/mystery0/pixel/meter/ui/theme/Theme.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "77cdccc59704ed3fe2c4ce64ffbe5cbcadbcfc21",
+      "size": 1068,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/77cdccc59704ed3fe2c4ce64ffbe5cbcadbcfc21"
+    },
+    {
+      "path": "app/src/main/res",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "54590c2a2c8f081a81de8725a6a38c6f3724b6ab",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/54590c2a2c8f081a81de8725a6a38c6f3724b6ab"
+    },
+    {
+      "path": "app/src/main/res/drawable",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ac3a90aaceccf68fc9351d18b6494624dd50c40e",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/ac3a90aaceccf68fc9351d18b6494624dd50c40e"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_launcher_foreground.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ff5ffaeabba072fa68b88f4c927b145404c0a263",
+      "size": 1212,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/ff5ffaeabba072fa68b88f4c927b145404c0a263"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_notifications.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e29a13d4a87a5ba31e4f25daaf200a6074e3d9cd",
+      "size": 460,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/e29a13d4a87a5ba31e4f25daaf200a6074e3d9cd"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_overlay.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d75212636a9c36c2a281b878f5ef5f3182b653fb",
+      "size": 386,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/d75212636a9c36c2a281b878f5ef5f3182b653fb"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_speed.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7ed418b809cecab29fd0eda80181a046415fa18f",
+      "size": 478,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/7ed418b809cecab29fd0eda80181a046415fa18f"
+    },
+    {
+      "path": "app/src/main/res/layout",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2b3882689ed4d68201fcdda97e126659bb6cb712",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/2b3882689ed4d68201fcdda97e126659bb6cb712"
+    },
+    {
+      "path": "app/src/main/res/layout/notification_blank.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f6265034daf384cb945e7832e5b57c6891be26a5",
+      "size": 221,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/f6265034daf384cb945e7832e5b57c6891be26a5"
+    },
+    {
+      "path": "app/src/main/res/mipmap-anydpi-v26",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9971ce756f821418fa0153912f445a0720ed2f4a",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/9971ce756f821418fa0153912f445a0720ed2f4a"
+    },
+    {
+      "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ef49c991701f112c729dd16f212f072cc80d5eb4",
+      "size": 337,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/ef49c991701f112c729dd16f212f072cc80d5eb4"
+    },
+    {
+      "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ef49c991701f112c729dd16f212f072cc80d5eb4",
+      "size": 337,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/ef49c991701f112c729dd16f212f072cc80d5eb4"
+    },
+    {
+      "path": "app/src/main/res/mipmap-hdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "033924c156572d4dcaf9be6cce8f5809b7821732",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/033924c156572d4dcaf9be6cce8f5809b7821732"
+    },
+    {
+      "path": "app/src/main/res/mipmap-hdpi/ic_launcher.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fb00a9d054dd47af47a739381f60645e7c3edc60",
+      "size": 594,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/fb00a9d054dd47af47a739381f60645e7c3edc60"
+    },
+    {
+      "path": "app/src/main/res/mipmap-hdpi/ic_launcher_round.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "41a8a72c5ff2d8b24baff2037e68c35ecb2d1fea",
+      "size": 1660,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/41a8a72c5ff2d8b24baff2037e68c35ecb2d1fea"
+    },
+    {
+      "path": "app/src/main/res/mipmap-mdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f3301fbc7cf704ccaf1aaa9e900fc9d37625471e",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/f3301fbc7cf704ccaf1aaa9e900fc9d37625471e"
+    },
+    {
+      "path": "app/src/main/res/mipmap-mdpi/ic_launcher.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fb91070d2fddfdf1f95be0bbfea2ac0dab093822",
+      "size": 494,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/fb91070d2fddfdf1f95be0bbfea2ac0dab093822"
+    },
+    {
+      "path": "app/src/main/res/mipmap-mdpi/ic_launcher_round.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d61ac49bc6bbe2358f271a6c2fda527e09753f57",
+      "size": 1332,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/d61ac49bc6bbe2358f271a6c2fda527e09753f57"
+    },
+    {
+      "path": "app/src/main/res/mipmap-xhdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d059fc27b6dd9f9a1f8151b4fbd160421b04f3ae",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/d059fc27b6dd9f9a1f8151b4fbd160421b04f3ae"
+    },
+    {
+      "path": "app/src/main/res/mipmap-xhdpi/ic_launcher.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7310535d4ed48a663ce53ab13d52d6692e110065",
+      "size": 882,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/7310535d4ed48a663ce53ab13d52d6692e110065"
+    },
+    {
+      "path": "app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b976ff906dd0b2d3191304099c18caf3c9e21264",
+      "size": 2404,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/b976ff906dd0b2d3191304099c18caf3c9e21264"
+    },
+    {
+      "path": "app/src/main/res/mipmap-xxhdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "fe377ac29a297147ef9e7f3062ef224a1fb128db",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/fe377ac29a297147ef9e7f3062ef224a1fb128db"
+    },
+    {
+      "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0dece9ae839003b3208b1a830ca1c9f32d96cfcd",
+      "size": 1154,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/0dece9ae839003b3208b1a830ca1c9f32d96cfcd"
+    },
+    {
+      "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f3fa3fca14c5eac24b3046bc8e411c1fe95085c5",
+      "size": 3676,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/f3fa3fca14c5eac24b3046bc8e411c1fe95085c5"
+    },
+    {
+      "path": "app/src/main/res/mipmap-xxxhdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "cb1c9305c3ae716cdfe38daafa1626c0c9bc5a88",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/cb1c9305c3ae716cdfe38daafa1626c0c9bc5a88"
+    },
+    {
+      "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "690e3db327d4e5117ffe8127645a18fc6e6a47a7",
+      "size": 1582,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/690e3db327d4e5117ffe8127645a18fc6e6a47a7"
+    },
+    {
+      "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76b45a662e711e56653d444c0e6146d3cb132e8f",
+      "size": 5298,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/76b45a662e711e56653d444c0e6146d3cb132e8f"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ea44aeedd2e134361d4908888bf0030e42fd02b8",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/ea44aeedd2e134361d4908888bf0030e42fd02b8"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/strings.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "61c5646d9a6345a072ed6b90e98dd7886cf06188",
+      "size": 7611,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/61c5646d9a6345a072ed6b90e98dd7886cf06188"
+    },
+    {
+      "path": "app/src/main/res/values",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "119a7a22fe4c478bce0b4ac2ddd40eb214251fe3",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/119a7a22fe4c478bce0b4ac2ddd40eb214251fe3"
+    },
+    {
+      "path": "app/src/main/res/values/ic_launcher_background.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2b71d290c7a38474b939aef58da7c64510f5f494",
+      "size": 120,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/2b71d290c7a38474b939aef58da7c64510f5f494"
+    },
+    {
+      "path": "app/src/main/res/values/strings.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cd7052d5e7762eed16b1aea691dcfa83b7bce166",
+      "size": 8249,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/cd7052d5e7762eed16b1aea691dcfa83b7bce166"
+    },
+    {
+      "path": "app/src/main/res/values/themes.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3fca12bc7eb6d1804ddbd43b245804dece31d7c1",
+      "size": 259,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/3fca12bc7eb6d1804ddbd43b245804dece31d7c1"
+    },
+    {
+      "path": "app/src/main/res/xml",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "410b5ba27cbe7dc379f36affd59b21494b0af2f9",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/410b5ba27cbe7dc379f36affd59b21494b0af2f9"
+    },
+    {
+      "path": "app/src/main/res/xml/locales_config.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5e0d577e907b91538d73af399f49d06890d81404",
+      "size": 200,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/5e0d577e907b91538d73af399f49d06890d81404"
+    },
+    {
+      "path": "build.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "952b930665ce5a01e845d22ba6244ccf14432ffa",
+      "size": 269,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/952b930665ce5a01e845d22ba6244ccf14432ffa"
+    },
+    {
+      "path": "gradle.properties",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0dee8cbe1f701b399579e108a05cfa25b0b63380",
+      "size": 135,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/0dee8cbe1f701b399579e108a05cfa25b0b63380"
+    },
+    {
+      "path": "gradle",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "71c2b36feb1b214a1b914510f611aa8b595c4eae",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/71c2b36feb1b214a1b914510f611aa8b595c4eae"
+    },
+    {
+      "path": "gradle/libs.versions.toml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ac96c9efc2cf7a01d4778da45327feeaed6ec316",
+      "size": 2352,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/ac96c9efc2cf7a01d4778da45327feeaed6ec316"
+    },
+    {
+      "path": "gradle/wrapper",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0aa3247e62388ee77c6251b6535b20ff0f1c7559",
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/trees/0aa3247e62388ee77c6251b6535b20ff0f1c7559"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.jar",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8bdaf60c75ab801e22807dde59e12a8735a34077",
+      "size": 45457,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/8bdaf60c75ab801e22807dde59e12a8735a34077"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.properties",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1f8f649ce83bcfa342b66de6c74d36f7fe261d74",
+      "size": 281,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/1f8f649ce83bcfa342b66de6c74d36f7fe261d74"
+    },
+    {
+      "path": "gradlew",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ef07e0162b183eb9d19a2c9ba7035c283af9f8dd",
+      "size": 8728,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/ef07e0162b183eb9d19a2c9ba7035c283af9f8dd"
+    },
+    {
+      "path": "gradlew.bat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "db3a6ac207e507b0bc1635a9f2c18d3b174e682e",
+      "size": 2843,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/db3a6ac207e507b0bc1635a9f2c18d3b174e682e"
+    },
+    {
+      "path": "settings.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fc37dcb89c283ba0301cf89992106487edc3544d",
+      "size": 535,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/fc37dcb89c283ba0301cf89992106487edc3544d"
+    },
+    {
+      "path": "signing.gradle",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4ff5bcb07421bef0e876d10e79c6f9bc754c69cd",
+      "size": 939,
+      "url": "https://api.github.com/repos/realMoai/NowbarMeter/git/blobs/4ff5bcb07421bef0e876d10e79c6f9bc754c69cd"
+    }
+  ],
+  "truncated": false
+}

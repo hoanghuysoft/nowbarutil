@@ -36,12 +36,15 @@ class NotificationHelper(private val context: Context) {
             )
             notificationManager.createNotificationChannelGroup(group)
 
+            // IMPORTANCE_DEFAULT is required for Samsung Now Bar (Live Notification).
+            // IMPORTANCE_LOW will silently suppress the notification and prevent
+            // One UI from promoting it to the Now Bar pill.
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 context.getString(R.string.notification_channel_name),
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = "Shows real-time battery status in status bar"
+                description = "Shows real-time battery temperature in status bar"
                 setShowBadge(false)
                 setGroup(CHANNEL_ID)
                 setSound(null, null)
@@ -51,6 +54,7 @@ class NotificationHelper(private val context: Context) {
         }
     }
 
+    // Icon generation — render at higher res for clarity
     private val size =
         (context.resources.displayMetrics.density * 24).roundToInt().coerceAtLeast(48)
     private val bitmap = createBitmap(size, size)
@@ -61,7 +65,7 @@ class NotificationHelper(private val context: Context) {
         textAlign = Paint.Align.CENTER
         isAntiAlias = true
         typeface = Typeface.DEFAULT_BOLD
-        textSize = size * 0.50f 
+        textSize = size * 0.60f
     }
 
     private val unitPaint = Paint().apply {
@@ -69,14 +73,29 @@ class NotificationHelper(private val context: Context) {
         textAlign = Paint.Align.CENTER
         isAntiAlias = true
         typeface = Typeface.DEFAULT_BOLD
-        textSize = size * 0.35f 
+        textSize = size * 0.45f
     }
 
+    /**
+     * Builds the foreground service notification with battery temperature.
+     *
+     * @param thermalData Current battery temperature reading.
+     * @param isLiveUpdate If true, uses Samsung's `setShortCriticalText` and
+     *   `setRequestPromotedOngoing` APIs to push temperature into the Now Bar pill.
+     *   If false, renders a custom bitmap icon with the temperature value.
+     * @param isNotificationEnabled Whether the notification icon should show live data.
+     * @param textSize Relative text size for the bitmap icon value (0.0–1.0).
+     * @param unitSize Relative text size for the bitmap icon unit label (0.0–1.0).
+     * @param useCustomColor Whether to apply a custom accent color to the notification.
+     * @param color The custom accent color (ARGB int).
+     * @param isBlank If true, strips all content text for a minimalist status bar icon.
+     */
     fun buildNotification(
         thermalData: ThermalData,
+        isLiveUpdate: Boolean,
         isNotificationEnabled: Boolean,
-        textSize: Float = 0.50f,
-        unitSize: Float = 0.35f,
+        textSize: Float = 0.60f,
+        unitSize: Float = 0.45f,
         useCustomColor: Boolean = false,
         color: Int = 0,
         isBlank: Boolean = false
@@ -110,38 +129,53 @@ class NotificationHelper(private val context: Context) {
                 .setCustomBigContentView(blankView)
                 .setStyle(NotificationCompat.DecoratedCustomViewStyle())
         } else {
-            builder.setContentTitle("Battery Thermal Monitor")
+            builder.setContentTitle(context.getString(R.string.notification_content_title))
         }
 
         if (!isNotificationEnabled) {
             if (!isBlank) {
-                builder.setContentText("Monitoring is currently disabled.")
+                builder.setContentText(context.getString(R.string.notification_content_text))
             }
             return builder.build()
         }
 
-        // Format temp
+        // Format temperature for display
         val tempString = String.format(Locale.US, "%.1f", thermalData.temperatureCelsius)
         val fullText = "$tempString°C"
 
-        // Draw Bitmap
-        bitmap.eraseColor(Color.TRANSPARENT)
-        val cx = size / 2f
-        val cyValue = size * 0.5f 
-        val cyUnit = size * 0.95f
+        if (isLiveUpdate) {
+            // ── Samsung Now Bar (Live Notification) Mode ──
+            // setShortCriticalText: pushes compact text into the One UI Now Bar pill.
+            // setRequestPromotedOngoing: tells One UI to promote this as a Live activity.
+            // These are Samsung-specific NotificationCompat extensions that are no-ops
+            // on non-Samsung devices but are REQUIRED for the Now Bar to appear.
+            if (!isBlank) {
+                builder.setContentText("🌡️ $fullText")
+            }
+            builder.setShortCriticalText(fullText)
+                .setRequestPromotedOngoing(true)
+        } else {
+            // ── Standard Bitmap Icon Mode ──
+            // Renders the temperature value and unit directly onto a bitmap
+            // that replaces the small notification icon.
+            bitmap.eraseColor(Color.TRANSPARENT)
+            val cx = size / 2f
+            val cyValue = size * 0.5f
+            val cyUnit = size * 0.95f
 
-        textPaint.textSize = size * textSize
-        unitPaint.textSize = size * unitSize
+            textPaint.textSize = size * textSize
+            unitPaint.textSize = size * unitSize
 
-        canvas.drawText(tempString, cx, cyValue, textPaint)
-        canvas.drawText("°C", cx, cyUnit, unitPaint)
+            canvas.drawText(tempString, cx, cyValue, textPaint)
+            canvas.drawText("°C", cx, cyUnit, unitPaint)
 
-        val smallIcon = IconCompat.createWithBitmap(bitmap)
+            val smallIcon = IconCompat.createWithBitmap(bitmap)
 
-        if (!isBlank) {
-            builder.setContentText("Temperature: $fullText")
+            if (!isBlank) {
+                builder.setContentText("🌡️ $fullText")
+            }
+            builder.setSmallIcon(smallIcon)
         }
-        builder.setSmallIcon(smallIcon)
 
         return builder.build()
     }
