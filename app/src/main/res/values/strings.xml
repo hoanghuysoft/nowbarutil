@@ -98,8 +98,8 @@
     <string name="error_overlay_permission">Overlay permission required for Floating Window</string>
     <string name="error_service_start_failed">Failed to start service: %1$s</string>
 
-    <string name="notification_channel_name">Network Monitor Service</string>
-    <string name="notification_content_title">Network Speed</string>
+    <string name="notification_channel_name">Battery Temp Monitor Service</string>
+    <string name="notification_content_title">Battery Temperature</string>
     <string name="notification_content_text">Monitoring in background…</string>
     <string name="notification_content_text_monitoring">Monitoring…</string>
 
