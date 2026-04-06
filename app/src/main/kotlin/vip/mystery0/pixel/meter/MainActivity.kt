@@ -178,33 +178,13 @@ fun MainScreen(
             )
         },
         floatingActionButton = {
-            Column(horizontalAlignment = Alignment.End) {
-                // Service start/stop button
-                ExtendedFloatingActionButton(
-                    onClick = {
-                        if (isMonitoring) viewModel.stopService()
-                        else viewModel.startService()
-                    },
-                    icon = {
-                        Icon(
-                            if (isMonitoring) Icons.Filled.Stop else Icons.Filled.PlayArrow,
-                            contentDescription = null
-                        )
-                    },
-                    text = { Text(if (isMonitoring) "Stop" else "Track") },
-                    containerColor = if (isMonitoring) MaterialTheme.colorScheme.error
-                    else MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                // Add order button
-                ExtendedFloatingActionButton(
-                    onClick = { showAddDialog = true },
-                    icon = { Icon(Icons.Filled.Add, contentDescription = null) },
-                    text = { Text("Add Order") },
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                )
-            }
+            ExtendedFloatingActionButton(
+                onClick = { showAddDialog = true },
+                icon = { Icon(Icons.Filled.Add, contentDescription = null) },
+                text = { Text("Add Order") },
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         }
     ) { padding ->
         Box(
@@ -284,7 +264,7 @@ fun MainScreen(
                             order = order,
                             isTracked = order.expressId == trackedOrderId,
                             onTap = { viewModel.showOrderDetail(order) },
-                            onTrack = { viewModel.trackOnNowBar(order) },
+                            onTrack = { viewModel.toggleTracking(order) },
                             onDelete = { viewModel.deleteOrder(order.expressId, order.partner) }
                         )
                     }

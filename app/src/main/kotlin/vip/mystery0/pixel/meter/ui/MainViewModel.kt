@@ -103,9 +103,17 @@ class MainViewModel(
         _selectedOrderDetail.value = null
     }
 
-    /** Sets the given order as the one to track on the Now Bar. */
-    fun trackOnNowBar(order: Order) {
-        repository.setTrackedOrderId(order.expressId)
+    /** Toggles tracking for the given order. If already tracked, untracks and stops the service. */
+    fun toggleTracking(order: Order) {
+        if (repository.trackedOrderId.value == order.expressId) {
+            // Already tracked — untrack and stop
+            repository.setTrackedOrderId("")
+            stopService()
+        } else {
+            // Track this order and start the service
+            repository.setTrackedOrderId(order.expressId)
+            startService()
+        }
     }
 
     /** Starts the foreground tracking service. */
