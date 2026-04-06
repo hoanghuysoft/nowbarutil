@@ -85,6 +85,7 @@ import com.kakao.taxi.data.model.OrderDetail
 import com.kakao.taxi.data.model.TrackingEvent
 import com.kakao.taxi.ui.MainViewModel
 import com.kakao.taxi.ui.settings.SettingsActivity
+import com.kakao.taxi.ui.theme.PixelPulseTheme
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -103,11 +104,12 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            MaterialTheme(
-                colorScheme = MaterialTheme.colorScheme
-            ) {
+            val viewModel: MainViewModel = viewModel()
+            val isOledTheme by viewModel.isOledThemeEnabled.collectAsState()
+            PixelPulseTheme(isOledTheme = isOledTheme) {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     MainScreen(
+                        viewModel = viewModel,
                         onOpenSettings = {
                             startActivity(Intent(this, SettingsActivity::class.java))
                         }

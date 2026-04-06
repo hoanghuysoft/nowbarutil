@@ -43,6 +43,7 @@ class MainViewModel(
 
     val isHideFromRecents = repository.isHideFromRecents
     val hasNotificationPermission = MutableStateFlow(true)
+    val isOledThemeEnabled = repository.isOledThemeEnabled
 
     init {
         checkPermissions()
