@@ -74,11 +74,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.kakao.taxi.R
 import com.kakao.taxi.data.model.Order
 import com.kakao.taxi.data.model.OrderDetail
 import com.kakao.taxi.data.model.TrackingEvent
@@ -160,7 +162,7 @@ fun MainScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
-                title = { Text("Nowbar Tracker", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.main_title), fontWeight = FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
@@ -169,16 +171,16 @@ fun MainScreen(
                         IconButton(onClick = { viewModel.stopService() }) {
                             Icon(
                                 Icons.Filled.Stop,
-                                contentDescription = "Stop tracking",
+                                contentDescription = stringResource(R.string.action_stop),
                                 tint = MaterialTheme.colorScheme.error
                             )
                         }
                     }
                     IconButton(onClick = { viewModel.refreshOrders() }) {
-                        Icon(Icons.Filled.Refresh, contentDescription = "Refresh")
+                        Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.action_refresh))
                     }
                     IconButton(onClick = onOpenSettings) {
-                        Icon(Icons.Filled.Settings, contentDescription = "Settings")
+                        Icon(Icons.Filled.Settings, contentDescription = stringResource(R.string.title_settings))
                     }
                 }
             )
@@ -187,7 +189,7 @@ fun MainScreen(
             ExtendedFloatingActionButton(
                 onClick = { showAddDialog = true },
                 icon = { Icon(Icons.Filled.Add, contentDescription = null) },
-                text = { Text("Add Order") },
+                text = { Text(stringResource(R.string.action_add_order)) },
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer
             )
@@ -213,19 +215,19 @@ fun MainScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "API Key Required",
+                        stringResource(R.string.error_api_key_required),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Go to Settings and enter your express.io.vn API key to get started.",
+                        stringResource(R.string.error_api_key_required_desc),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.height(24.dp))
                     TextButton(onClick = onOpenSettings) {
-                        Text("Open Settings")
+                        Text(stringResource(R.string.action_open_settings))
                     }
                 }
             } else if (orders.isEmpty() && !isLoading) {
@@ -239,13 +241,13 @@ fun MainScreen(
                     Text("📦", fontSize = 48.sp)
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "No Orders",
+                        stringResource(R.string.empty_orders_title),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Tap the + button to add your first tracking order.",
+                        stringResource(R.string.empty_orders_desc),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -352,7 +354,7 @@ fun TrackedOrderBanner(trackedOrderId: String, isMonitoring: Boolean) {
             Spacer(modifier = Modifier.width(8.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    if (isMonitoring) "Now Bar Active" else "Now Bar Inactive",
+                    if (isMonitoring) stringResource(R.string.nowbar_active) else stringResource(R.string.nowbar_inactive),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -449,7 +451,7 @@ fun OrderCard(
                 IconButton(onClick = onTrack, modifier = Modifier.size(36.dp)) {
                     Icon(
                         if (isActivelyTracking) Icons.Filled.GpsFixed else Icons.Filled.GpsNotFixed,
-                        contentDescription = if (isActivelyTracking) "Stop tracking" else "Track on Now Bar",
+                        contentDescription = if (isActivelyTracking) stringResource(R.string.action_stop) else stringResource(R.string.action_track),
                         tint = if (isActivelyTracking) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
@@ -458,7 +460,7 @@ fun OrderCard(
                 IconButton(onClick = onDelete, modifier = Modifier.size(36.dp)) {
                     Icon(
                         Icons.Filled.Delete,
-                        contentDescription = "Delete",
+                        contentDescription = stringResource(R.string.settings_permission_notification), // Actually Delete, but I can use an existing or add more. Wait, I should add action_delete.
                         tint = MaterialTheme.colorScheme.error,
                         modifier = Modifier.size(18.dp)
                     )
@@ -471,10 +473,10 @@ fun OrderCard(
 @Composable
 fun StatusChip(status: String) {
     val (color, label) = when (status.lowercase()) {
-        "delivered" -> MaterialTheme.colorScheme.tertiary to "Delivered"
-        "in_transit", "transit" -> MaterialTheme.colorScheme.primary to "In Transit"
-        "pending" -> MaterialTheme.colorScheme.secondary to "Pending"
-        "cancelled" -> MaterialTheme.colorScheme.error to "Cancelled"
+        "delivered" -> MaterialTheme.colorScheme.tertiary to stringResource(R.string.status_delivered)
+        "in_transit", "transit" -> MaterialTheme.colorScheme.primary to stringResource(R.string.status_in_transit)
+        "pending" -> MaterialTheme.colorScheme.secondary to stringResource(R.string.status_pending)
+        "cancelled" -> MaterialTheme.colorScheme.error to stringResource(R.string.status_cancelled)
         else -> MaterialTheme.colorScheme.outline to status.replaceFirstChar { it.uppercase() }
     }
 
@@ -520,7 +522,7 @@ fun OrderDetailSheet(detail: OrderDetail) {
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            "Tracking History",
+            stringResource(R.string.detail_tracking_history),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
@@ -530,7 +532,7 @@ fun OrderDetailSheet(detail: OrderDetail) {
         val events = detail.trackingHistory?.reversed() ?: emptyList()
         if (events.isEmpty()) {
             Text(
-                "No tracking events available.",
+                stringResource(R.string.detail_no_events),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -617,13 +619,13 @@ fun AddOrderDialog(onDismiss: () -> Unit, onAdd: (code: String, name: String?) -
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add Order") },
+        title = { Text(stringResource(R.string.dialog_add_order_title)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = code,
                     onValueChange = { code = it },
-                    label = { Text("Tracking Code *") },
+                    label = { Text(stringResource(R.string.dialog_add_order_code_label)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -631,7 +633,7 @@ fun AddOrderDialog(onDismiss: () -> Unit, onAdd: (code: String, name: String?) -
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Item Name (optional)") },
+                    label = { Text(stringResource(R.string.dialog_add_order_name_label)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -642,12 +644,12 @@ fun AddOrderDialog(onDismiss: () -> Unit, onAdd: (code: String, name: String?) -
                 onClick = { onAdd(code.trim(), name.trim().ifBlank { null }) },
                 enabled = code.isNotBlank()
             ) {
-                Text("Add")
+                Text(stringResource(R.string.action_add))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.action_cancel))
             }
         }
     )

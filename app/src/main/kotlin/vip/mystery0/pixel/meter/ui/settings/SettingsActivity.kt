@@ -106,7 +106,7 @@ class SettingsActivity : ComponentActivity() {
                     title = { Text(stringResource(R.string.title_settings)) },
                     navigationIcon = {
                         IconButton(onClick = { finish() }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
                         }
                     }
                 )
@@ -141,13 +141,13 @@ fun ApiSection(viewModel: SettingsViewModel) {
     val pollingInterval by viewModel.pollingInterval.collectAsState(initial = 30000L)
     var showApiKeyDialog by remember { mutableStateOf(false) }
 
-    PreferenceCategory(title = { Text("API Configuration") })
+    PreferenceCategory(title = { Text(stringResource(R.string.settings_category_api)) })
 
     Preference(
-        title = { Text("API Key") },
+        title = { Text(stringResource(R.string.settings_api_key_title)) },
         summary = {
             Text(
-                if (apiKey.isBlank()) "Not configured — tap to set"
+                if (apiKey.isBlank()) stringResource(R.string.settings_api_key_not_configured)
                 else "••••••••${apiKey.takeLast(6)}"
             )
         },
@@ -162,8 +162,8 @@ fun ApiSection(viewModel: SettingsViewModel) {
         sliderValue = pollingSeconds,
         onSliderValueChange = { viewModel.setPollingInterval((it * 1000).toLong()) },
         valueRange = 10f..120f,
-        title = { Text("Polling Interval") },
-        summary = { Text("How often to check order status") },
+        title = { Text(stringResource(R.string.settings_polling_interval_title)) },
+        summary = { Text(stringResource(R.string.settings_polling_interval_desc)) },
         valueText = { Text("${pollingSeconds.toInt()}s") }
     )
 
@@ -171,11 +171,11 @@ fun ApiSection(viewModel: SettingsViewModel) {
         var keyInput by remember { mutableStateOf(apiKey) }
         AlertDialog(
             onDismissRequest = { showApiKeyDialog = false },
-            title = { Text("API Key") },
+            title = { Text(stringResource(R.string.settings_api_key_title)) },
             text = {
                 Column {
                     Text(
-                        "Enter your express.io.vn API key",
+                        stringResource(R.string.settings_api_key_dialog_desc),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -183,7 +183,7 @@ fun ApiSection(viewModel: SettingsViewModel) {
                     OutlinedTextField(
                         value = keyInput,
                         onValueChange = { keyInput = it },
-                        label = { Text("X-API-Key") },
+                        label = { Text(stringResource(R.string.settings_api_key_label)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -194,12 +194,12 @@ fun ApiSection(viewModel: SettingsViewModel) {
                     viewModel.setApiKey(keyInput.trim())
                     showApiKeyDialog = false
                 }) {
-                    Text("Save")
+                    Text(stringResource(R.string.action_save))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showApiKeyDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.action_cancel))
                 }
             }
         )

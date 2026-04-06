@@ -7,6 +7,15 @@
     <string name="notification_content_title">Order Tracking</string>
     <string name="notification_content_text">Monitoring in background…</string>
 
+    <!-- Settings: API -->
+    <string name="settings_category_api">API Configuration</string>
+    <string name="settings_api_key_title">API Key</string>
+    <string name="settings_api_key_not_configured">Not configured — tap to set</string>
+    <string name="settings_polling_interval_title">Polling Interval</string>
+    <string name="settings_polling_interval_desc">How often to check order status</string>
+    <string name="settings_api_key_dialog_desc">Enter your express.io.vn API key</string>
+    <string name="settings_api_key_label">X-API-Key</string>
+
     <!-- Settings: General -->
     <string name="settings_category_general">General Settings</string>
     <string name="settings_oled_theme_title">OLED Theme</string>
@@ -49,6 +58,33 @@
     <string name="tile_notification_label">Order Tracking</string>
     <string name="tile_desc_active">Active</string>
     <string name="tile_desc_inactive">Inactive</string>
+
+    <!-- Main Screen -->
+    <string name="main_title">Nowbar Tracker</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_track">Track</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_add_order">Add Order</string>
+    <string name="error_api_key_required">API Key Required</string>
+    <string name="error_api_key_required_desc">Go to Settings and enter your express.io.vn API key to get started.</string>
+    <string name="action_open_settings">Open Settings</string>
+    <string name="empty_orders_title">No Orders</string>
+    <string name="empty_orders_desc">Tap the + button to add your first tracking order.</string>
+    <string name="nowbar_active">Now Bar Active</string>
+    <string name="nowbar_inactive">Now Bar Inactive</string>
+    <string name="status_delivered">Delivered</string>
+    <string name="status_in_transit">In Transit</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_cancelled">Cancelled</string>
+    <string name="detail_tracking_history">Tracking History</string>
+    <string name="detail_no_events">No tracking events available.</string>
+    <string name="dialog_add_order_title">Add Order</string>
+    <string name="dialog_add_order_code_label">Tracking Code *</string>
+    <string name="dialog_add_order_name_label">Item Name (optional)</string>
+    <string name="action_add">Add</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_back">Back</string>
 
     <!-- Misc -->
     <string name="color_picker_title">Select Color</string>

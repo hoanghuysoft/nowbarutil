@@ -189,12 +189,12 @@ class NotificationHelper(private val context: Context) {
      */
     private fun getStatusAbbreviation(status: String): String {
         return when {
-            status.contains("thành công", ignoreCase = true) -> "✓"
-            status.contains("giao hàng", ignoreCase = true) -> "🚚"
-            status.contains("trung chuyển", ignoreCase = true) -> "→"
-            status.contains("kho", ignoreCase = true) -> "📦"
-            status.contains("lấy hàng", ignoreCase = true) -> "↑"
-            status.contains("chuẩn bị", ignoreCase = true) -> "⏳"
+            status.contains("thành công", ignoreCase = true) || status.contains("成功", ignoreCase = true) -> "✓"
+            status.contains("giao hàng", ignoreCase = true) || status.contains("派送", ignoreCase = true) || status.contains("派件", ignoreCase = true) -> "🚚"
+            status.contains("trung chuyển", ignoreCase = true) || status.contains("运输", ignoreCase = true) || status.contains("中转", ignoreCase = true) -> "→"
+            status.contains("kho", ignoreCase = true) || status.contains("仓库", ignoreCase = true) || status.contains("分拨", ignoreCase = true) -> "📦"
+            status.contains("lấy hàng", ignoreCase = true) || status.contains("取件", ignoreCase = true) || status.contains("揽收", ignoreCase = true) -> "↑"
+            status.contains("chuẩn bị", ignoreCase = true) || status.contains("准备", ignoreCase = true) -> "⏳"
             status.contains("delivered", ignoreCase = true) -> "✓"
             status.contains("transit", ignoreCase = true) -> "→"
             else -> status.take(2).uppercase()

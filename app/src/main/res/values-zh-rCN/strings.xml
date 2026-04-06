@@ -1,103 +1,94 @@
 <resources>
-    <string name="title_configuration">权限配置</string>
-    <string name="title_monitor_control">服务运行控制</string>
-    <string name="label_total_speed">总网速</string>
-    <string name="label_download">下载</string>
-    <string name="label_upload">上传</string>
-    <string name="status_monitor_running">服务运行中</string>
-    <string name="status_monitor_stopped">服务已停止</string>
-    <string name="action_start">启动</string>
-    <string name="action_stop">停止</string>
-    <string name="action_request_fix">修复</string>
-    <string name="action_dismiss">忽略</string>
-
-    <string name="title_feature_config">功能配置</string>
-    <string name="config_enable_overlay">启用悬浮窗</string>
-    <string name="config_enable_overlay_desc">显示桌面悬浮窗</string>
-    <string name="config_overlay_disabled_reason">服务运行中无法修改，请先停止服务</string>
-    <string name="config_enable_notification">在通知上显示</string>
-    <string name="config_enable_notification_desc">在通知栏显示网速</string>
-
-    <string name="title_tools">工具箱</string>
-    <string name="action_speed_test">网络测速</string>
-    <string name="desc_speed_test">使用 Cloudflare 进行测速</string>
-
+    <string name="app_name" translatable="false">实时订单</string>
     <string name="title_settings">设置</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">订单追踪服务</string>
+    <string name="notification_content_title">订单追踪</string>
+    <string name="notification_content_text">后台监控中…</string>
+
+    <!-- Settings: API -->
+    <string name="settings_category_api">API 配置</string>
+    <string name="settings_api_key_title">API 密钥</string>
+    <string name="settings_api_key_not_configured">未配置 — 点击设置</string>
+    <string name="settings_polling_interval_title">轮询间隔</string>
+    <string name="settings_polling_interval_desc">检查订单状态的频率</string>
+    <string name="settings_api_key_dialog_desc">输入您的 express.io.vn API 密钥</string>
+    <string name="settings_api_key_label">X-API-Key</string>
+
+    <!-- Settings: General -->
     <string name="settings_category_general">常规设置</string>
-    <string name="settings_sampling_interval">数据采样间隔时间</string>
-    <string name="settings_sampling_interval_desc">过低的间隔时间会导致结果准确度降低，过高的间隔时间结果更准确，但是更新的很慢</string>
-    <string name="settings_speed_unit_title">网速单位</string>
-    <string name="settings_speed_unit_desc">锁定网速显示的计量单位</string>
-    <string name="settings_speed_unit_auto">自动</string>
-    <string name="settings_auto_start_service_title">自动启动监听服务</string>
-    <string name="settings_auto_start_service_desc">开机后自动启动网速监听服务</string>
-    <string name="settings_auto_start_disabled_reason">需要悬浮窗或通知权限</string>
-    <string name="settings_permission_overlay">悬浮窗权限</string>
+    <string name="settings_oled_theme_title">OLED 主题</string>
+    <string name="settings_oled_theme_desc">为 OLED 屏幕启用纯黑主题</string>
+    <string name="settings_auto_start_service_title">自动启动追踪服务</string>
+    <string name="settings_auto_start_service_desc">开机时自动启动服务</string>
+    <string name="settings_auto_start_disabled_reason">需要通知权限</string>
     <string name="settings_permission_notification">通知权限</string>
     <string name="settings_permission_granted">已授予</string>
-    <string name="settings_permission_denied">未授予 (点击授权)</string>
-    <string name="settings_category_overlay">悬浮窗设置</string>
-    <string name="settings_lock_overlay">锁定悬浮窗位置</string>
-    <string name="config_lock_overlay_desc">防止悬浮窗被移动</string>
-    <string name="settings_overlay_use_default_colors">使用默认颜色</string>
-    <string name="settings_overlay_use_default_colors_desc">悬浮窗颜色跟随系统主题（深色/浅色）自动调整</string>
-    <string name="settings_overlay_bg_color">背景颜色</string>
-    <string name="settings_overlay_text_color">文本颜色</string>
-    <string name="settings_overlay_corner_radius">圆角大小</string>
-    <string name="settings_overlay_text_size">文字大小</string>
-    <string name="settings_text_prefix_up">上行文本前缀</string>
-    <string name="settings_text_prefix_up_desc">显示上行流量的文本前缀，当前值为：%1$s</string>
-    <string name="settings_text_prefix_down">下行文本前缀</string>
-    <string name="settings_text_prefix_down_desc">显示下行流量的文本前缀，当前值为：%1$s</string>
-    <string name="settings_show_up_first">优先显示上行</string>
-    <string name="settings_show_up_first_desc">上行流量显示在前面</string>
+    <string name="settings_permission_denied">已拒绝 (点击授权)</string>
+
+    <!-- Settings: Notification -->
     <string name="settings_category_notification">通知设置</string>
-    <string name="config_enable_live_update">启用实时更新</string>
-    <string name="config_enable_live_update_desc">使用实时网速更新通知栏 (需要 Android 16+ 版本)</string>
-    <string name="settings_notification_display_mode">显示内容</string>
-    <string name="settings_display_mode_total">显示总网速</string>
-    <string name="settings_display_mode_upload">仅显示上行网速</string>
-    <string name="settings_display_mode_download">仅显示下行网速</string>
+    <string name="config_enable_notification">在通知中显示</string>
+    <string name="config_enable_notification_desc">在通知栏中显示订单状态</string>
+    <string name="config_enable_live_update">Now Bar 集成</string>
+    <string name="config_enable_live_update_desc">使用状态栏芯片 (需要 OneUI 7+)</string>
+    <string name="settings_blank_notification_title">隐藏通知内容</string>
+    <string name="settings_blank_notification_desc">隐藏通知内容以保持通知栏整洁</string>
     <string name="settings_notification_text_size">图标数字大小</string>
     <string name="settings_notification_unit_size">图标单位大小</string>
-    <string name="settings_notification_threshold">网速通知阈值</string>
-    <string name="settings_notification_threshold_desc">当网速低于阈值 (%1$s) 时，进入低流量模式</string>
-    <string name="settings_notification_threshold_disabled">低流量模式已禁用</string>
-    <string name="settings_notification_threshold_input_title">精准阈值设置 (KB/s)</string>
-    <string name="settings_notification_threshold_input_summary">直接输入阈值数值，单位为 KB/s</string>
-    <string name="settings_notification_low_traffic_mode">低流量模式动作</string>
-    <string name="settings_notification_low_traffic_mode_static">显示静态图标</string>
-    <string name="settings_notification_low_traffic_mode_dynamic">显示动态网速</string>
-    <string name="settings_notification_low_traffic_mode_explanation">静态：显示应用图标。\n动态：显示实时网速(如 0K/s)。\n注意：切换此选项需等待两个统计周期生效。</string>
     <string name="settings_notification_use_custom_color_title">自定义通知颜色</string>
-    <string name="settings_notification_use_custom_color_desc">设置通知栏网速图标的颜色（在某些ROM上可能会有奇效）</string>
+    <string name="settings_notification_use_custom_color_desc">设置通知图标的特定颜色</string>
     <string name="settings_notification_color_title">通知颜色</string>
-    <string name="settings_category_background">后台配置</string>
-    <string name="settings_ignore_battery_optimizations_title">忽略电池优化</string>
-    <string name="settings_ignore_battery_optimizations_on">已忽略优化</string>
-    <string name="settings_ignore_battery_optimizations_off">未忽略优化</string>
-    <string name="settings_hide_from_recents_title">在最近任务中隐藏</string>
-    <string name="settings_hide_from_recents_desc">从最近任务列表中隐藏应用，防止被一键清理误杀（需要重启应用）</string>
-    <string name="settings_dont_kill_my_app_title">后台保活说明</string>
-    <string name="settings_dont_kill_my_app_desc">了解如何防止应用在后台被杀</string>
+
+    <!-- Settings: Background -->
+    <string name="settings_category_background">后台设置</string>
+    <string name="settings_hide_from_recents_title">从最近任务中隐藏</string>
+    <string name="settings_hide_from_recents_desc">从最近任务列表中隐藏应用</string>
+    <string name="settings_battery_optimization_title">电池优化</string>
+    <string name="settings_battery_optimization_disabled">已忽略优化</string>
+    <string name="settings_battery_optimization_enabled">优化开启 (点击配置)</string>
+
+    <!-- Settings: About -->
     <string name="settings_category_about">关于</string>
     <string name="settings_app_version">应用版本</string>
     <string name="settings_github">GitHub</string>
 
-    <string name="color_picker_title">选择颜色</string>
-
-    <string name="error_unknown">未知错误</string>
-    <string name="error_notification_permission">启用通知需要授予“通知权限”</string>
-    <string name="error_overlay_permission">启用悬浮窗需要“显示在其他应用上层”的权限</string>
-    <string name="error_service_start_failed">启动服务失败: %1$s</string>
-
-    <string name="notification_channel_name">网速显示服务</string>
-    <string name="notification_content_title">网速显示</string>
-    <string name="notification_content_text">正在运行…</string>
-    <string name="notification_content_text_monitoring">监听中…</string>
-
-    <string name="tile_overlay_label">悬浮窗</string>
-    <string name="tile_notification_label">通知栏显示</string>
+    <!-- Quick Settings Tile -->
+    <string name="tile_notification_label">订单追踪</string>
     <string name="tile_desc_active">已开启</string>
     <string name="tile_desc_inactive">已关闭</string>
+
+    <!-- Main Screen -->
+    <string name="main_title">Nowbar 追踪器</string>
+    <string name="action_refresh">刷新</string>
+    <string name="action_track">追踪</string>
+    <string name="action_stop">停止</string>
+    <string name="action_add_order">添加订单</string>
+    <string name="error_api_key_required">需要 API 密钥</string>
+    <string name="error_api_key_required_desc">请前往设置并输入您的 express.io.vn API 密钥以开始使用。</string>
+    <string name="action_open_settings">打开设置</string>
+    <string name="empty_orders_title">暂无订单</string>
+    <string name="empty_orders_desc">点击 + 按钮添加您的第一个追踪订单。</string>
+    <string name="nowbar_active">Now Bar 已激活</string>
+    <string name="nowbar_inactive">Now Bar 未激活</string>
+    <string name="status_delivered">已送达</string>
+    <string name="status_in_transit">运输中</string>
+    <string name="status_pending">待处理</string>
+    <string name="status_cancelled">已取消</string>
+    <string name="detail_tracking_history">追踪历史</string>
+    <string name="detail_no_events">暂无追踪事件。</string>
+    <string name="dialog_add_order_title">添加订单</string>
+    <string name="dialog_add_order_code_label">追踪单号 *</string>
+    <string name="dialog_add_order_name_label">物品名称 (可选)</string>
+    <string name="action_add">添加</string>
+    <string name="action_save">保存</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_back">返回</string>
+
+    <!-- Misc -->
+    <string name="color_picker_title">选择颜色</string>
+    <string name="error_unknown">未知错误</string>
+    <string name="error_notification_permission">需要通知权限</string>
+    <string name="error_service_start_failed">启动服务失败: %1$s</string>
 </resources>

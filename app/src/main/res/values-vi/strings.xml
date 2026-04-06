@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name" translatable="false">Đơn hàng Trực tiếp</string>
+    <string name="title_settings">Cài đặt</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">Live Order</string>
+    <string name="notification_content_title">Theo dõi Đơn hàng</string>
+    <string name="notification_content_text">Đang theo dõi trong nền…</string>
+
+    <!-- Settings: API -->
+    <string name="settings_category_api">Cấu hình API</string>
+    <string name="settings_api_key_title">Khóa API</string>
+    <string name="settings_api_key_not_configured">Chưa cấu hình — nhấn để thiết lập</string>
+    <string name="settings_polling_interval_title">Khoảng thời gian Polling</string>
+    <string name="settings_polling_interval_desc">Tần suất kiểm tra trạng thái đơn hàng</string>
+    <string name="settings_api_key_dialog_desc">Nhập khóa API express.io.vn của bạn</string>
+    <string name="settings_api_key_label">X-API-Key</string>
+
+    <!-- Settings: General -->
+    <string name="settings_category_general">Cài đặt Chung</string>
+    <string name="settings_oled_theme_title">Chủ đề OLED</string>
+    <string name="settings_oled_theme_desc">Bật chủ đề đen thuần khiết cho màn hình OLED</string>
+    <string name="settings_auto_start_service_title">Tự động Khởi chạy Dịch vụ</string>
+    <string name="settings_auto_start_service_desc">Khỏi chạy dịch vụ tự động khi khởi động máy</string>
+    <string name="settings_auto_start_disabled_reason">Yêu cầu quyền Thông báo</string>
+    <string name="settings_permission_notification">Quyền Thông báo</string>
+    <string name="settings_permission_granted">Đã cấp</string>
+    <string name="settings_permission_denied">Đã từ chối (Nhấp để Cấp quyền)</string>
+
+    <!-- Settings: Notification -->
+    <string name="settings_category_notification">Cài đặt Thông báo</string>
+    <string name="config_enable_notification">Hiện trên Thông báo</string>
+    <string name="config_enable_notification_desc">Hiện trạng thái đơn hàng trên thanh thông báo</string>
+    <string name="config_enable_live_update">Tích hợp Now Bar</string>
+    <string name="config_enable_live_update_desc">Sử dụng chip trên thanh trạng thái (Yêu cầu OneUI 7+)</string>
+    <string name="settings_blank_notification_title">Thông báo Trống</string>
+    <string name="settings_blank_notification_desc">Ẩn nội dung thông báo để thanh thông báo gọn gàng hơn</string>
+    <string name="settings_notification_text_size">Kích thước Số Biểu tượng</string>
+    <string name="settings_notification_unit_size">Kích thước Đơn vị Biểu tượng</string>
+    <string name="settings_notification_use_custom_color_title">Màu Thông báo Tùy chỉnh</string>
+    <string name="settings_notification_use_custom_color_desc">Đặt màu sắc cụ thể cho biểu tượng thông báo</string>
+    <string name="settings_notification_color_title">Màu Thông báo</string>
+
+    <!-- Settings: Background -->
+    <string name="settings_category_background">Cài đặt Nền</string>
+    <string name="settings_hide_from_recents_title">Ẩn khỏi Danh sách Gần đây</string>
+    <string name="settings_hide_from_recents_desc">Ẩn ứng dụng khỏi danh sách tác vụ gần đây</string>
+    <string name="settings_battery_optimization_title">Tối ưu hóa Pin</string>
+    <string name="settings_battery_optimization_disabled">Đã bỏ qua Tối ưu hóa</string>
+    <string name="settings_battery_optimization_enabled">Đang Tối ưu hóa (Nhấp để Cấu hình)</string>
+
+    <!-- Settings: About -->
+    <string name="settings_category_about">Giới thiệu</string>
+    <string name="settings_app_version">Phiên bản Ứng dụng</string>
+    <string name="settings_github">GitHub</string>
+
+    <!-- Quick Settings Tile -->
+    <string name="tile_notification_label">Theo dõi Đơn hàng</string>
+    <string name="tile_desc_active">Đang hoạt động</string>
+    <string name="tile_desc_inactive">Không hoạt động</string>
+
+    <!-- Main Screen -->
+    <string name="main_title">Theo dõi Nowbar</string>
+    <string name="action_refresh">Làm mới</string>
+    <string name="action_track">Theo dõi</string>
+    <string name="action_stop">Dừng</string>
+    <string name="action_add_order">Thêm Đơn hàng</string>
+    <string name="error_api_key_required">Yêu cầu Khóa API</string>
+    <string name="error_api_key_required_desc">Vui lòng đi đến Cài đặt và nhập khóa API express.io.vn của bạn để bắt đầu.</string>
+    <string name="action_open_settings">Mở Cài đặt</string>
+    <string name="empty_orders_title">Không có Đơn hàng</string>
+    <string name="empty_orders_desc">Nhấn vào nút + để thêm đơn hàng theo dõi đầu tiên của bạn.</string>
+    <string name="nowbar_active">Now Bar Đang hoạt động</string>
+    <string name="nowbar_inactive">Now Bar Không hoạt động</string>
+    <string name="status_delivered">Đã giao</string>
+    <string name="status_in_transit">Đang vận chuyển</string>
+    <string name="status_pending">Đang xử lý</string>
+    <string name="status_cancelled">Đã hủy</string>
+    <string name="detail_tracking_history">Lịch sử Hành trình</string>
+    <string name="detail_no_events">Không có dữ liệu hành trình.</string>
+    <string name="dialog_add_order_title">Thêm Đơn hàng</string>
+    <string name="dialog_add_order_code_label">Mã Vận đơn *</string>
+    <string name="dialog_add_order_name_label">Tên sản phẩm (tùy chọn)</string>
+    <string name="action_add">Thêm</string>
+    <string name="action_save">Lưu</string>
+    <string name="action_cancel">Hủy</string>
+    <string name="action_back">Quay lại</string>
+
+    <!-- Misc -->
+    <string name="color_picker_title">Chọn màu</string>
+    <string name="error_unknown">Lỗi không xác định</string>
+    <string name="error_notification_permission">Yêu cầu quyền thông báo</string>
+    <string name="error_service_start_failed">Khởi chạy dịch vụ thất bại: %1$s</string>
+</resources>
