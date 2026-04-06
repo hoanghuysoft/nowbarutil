@@ -168,6 +168,15 @@ fun MainScreen(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
                 actions = {
+                    if (isMonitoring) {
+                        IconButton(onClick = { viewModel.stopService() }) {
+                            Icon(
+                                Icons.Filled.Stop,
+                                contentDescription = "Stop tracking",
+                                tint = MaterialTheme.colorScheme.error
+                            )
+                        }
+                    }
                     IconButton(onClick = { viewModel.refreshOrders() }) {
                         Icon(Icons.Filled.Refresh, contentDescription = "Refresh")
                     }
@@ -263,6 +272,7 @@ fun MainScreen(
                         OrderCard(
                             order = order,
                             isTracked = order.expressId == trackedOrderId,
+                            isServiceRunning = isMonitoring,
                             onTap = { viewModel.showOrderDetail(order) },
                             onTrack = { viewModel.toggleTracking(order) },
                             onDelete = { viewModel.deleteOrder(order.expressId, order.partner) }
@@ -365,10 +375,12 @@ fun TrackedOrderBanner(trackedOrderId: String, isMonitoring: Boolean) {
 fun OrderCard(
     order: Order,
     isTracked: Boolean,
+    isServiceRunning: Boolean = false,
     onTap: () -> Unit,
     onTrack: () -> Unit,
     onDelete: () -> Unit
 ) {
+    val isActivelyTracking = isTracked && isServiceRunning
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -439,9 +451,9 @@ fun OrderCard(
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 IconButton(onClick = onTrack, modifier = Modifier.size(36.dp)) {
                     Icon(
-                        Icons.Filled.GpsFixed,
-                        contentDescription = "Track on Now Bar",
-                        tint = if (isTracked) MaterialTheme.colorScheme.primary
+                        if (isActivelyTracking) Icons.Filled.GpsFixed else Icons.Filled.GpsNotFixed,
+                        contentDescription = if (isActivelyTracking) "Stop tracking" else "Track on Now Bar",
+                        tint = if (isActivelyTracking) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
