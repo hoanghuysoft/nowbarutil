@@ -112,10 +112,12 @@ class MainViewModel(
         if (repository.trackedOrderId.value == order.expressId) {
             // Already tracked — untrack and stop
             repository.setTrackedOrderId("")
+            repository.setMonitoring(false)
             stopService()
         } else {
             // Track this order and start the service
             repository.setTrackedOrderId(order.expressId)
+            repository.setMonitoring(true)
             startService()
         }
     }

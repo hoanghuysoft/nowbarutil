@@ -270,6 +270,9 @@ class OrderRepository(
 
     fun clearError() { _error.value = null }
 
+    /** Allows eager UI updates before the service lifecycle catches up. */
+    fun setMonitoring(value: Boolean) { _isMonitoring.value = value }
+
     // ── Preference Setters ──
 
     fun setApiKey(key: String) { scope.launch { dataStoreRepository.setApiKey(key) } }
