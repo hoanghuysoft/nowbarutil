@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Nowbar Tracker</string>
+    <string name="app_name" translatable="false">Live Order</string>
     <string name="title_settings">Settings</string>
 
     <!-- Notification -->

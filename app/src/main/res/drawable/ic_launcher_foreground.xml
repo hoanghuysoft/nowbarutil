@@ -1,27 +1,5 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp"
-    android:height="108dp"
-    android:viewportWidth="512"
-    android:viewportHeight="512">
-  <group android:scaleX="0.6"
-      android:scaleY="0.6"
-      android:translateX="102.4"
-      android:translateY="102.4">
-    <path
-        android:pathData="M125,280L125,280A25,25 0,0 1,150 305L150,387A25,25 0,0 1,125 412L125,412A25,25 0,0 1,100 387L100,305A25,25 0,0 1,125 280z"
-        android:fillColor="#FFFFFF"/>
-    <path
-        android:pathData="M205,210L205,210A25,25 0,0 1,230 235L230,387A25,25 0,0 1,205 412L205,412A25,25 0,0 1,180 387L180,235A25,25 0,0 1,205 210z"
-        android:fillColor="#FFFFFF"/>
-    <path
-        android:pathData="M285,140L285,140A25,25 0,0 1,310 165L310,387A25,25 0,0 1,285 412L285,412A25,25 0,0 1,260 387L260,165A25,25 0,0 1,285 140z"
-        android:fillColor="#FFFFFF"/>
-    <path
-        android:pathData="M375,100L375,397M345,130L375,100L405,130M345,367L375,397L405,367"
-        android:strokeLineJoin="round"
-        android:strokeWidth="30"
-        android:fillColor="#00000000"
-        android:strokeColor="#FFFFFF"
-        android:strokeLineCap="round"/>
-  </group>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="24dp" android:viewportHeight="960" android:viewportWidth="960" android:width="24dp">
+      
+    <path android:fillColor="#FFFFFF" android:pathData="M188,764q-32,-36 -27,-85L61,679l13,-60h112q15,-18 36.5,-28.5T270,580q26,0 47.5,10.5T354,619h198l92,-399L186,220l3,-13q5,-21 21,-34t37,-13h472l-39,170h125l114,152 -39,197h-80q5,49 -27.5,85T690,800q-50,0 -82,-36t-27,-85L380,679q5,49 -27.5,85T270,800q-50,0 -82,-36ZM634,530h215l6,-33 -80,-107L666,390l-32,140ZM635,257 L644,220 552,619 560,583 594,437 635,257ZM22,523l15,-60h220l-15,60L22,523ZM102,377 L117,317h260l-15,60L102,377ZM270,740q21,0 35.5,-15t14.5,-35q0,-21 -14.5,-35.5T270,640q-20,0 -35,14.5T220,690q0,20 15,35t35,15ZM690,740q21,0 35.5,-15t14.5,-35q0,-21 -14.5,-35.5T690,640q-20,0 -35,14.5T640,690q0,20 15,35t35,15Z"/>
+    
 </vector>
