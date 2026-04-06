@@ -1,0 +1,114 @@
+package com.kakao.taxi.ui
+
+import android.app.Application
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.provider.Settings
+import android.util.Log
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.AndroidViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import com.kakao.taxi.R
+import com.kakao.taxi.data.repository.ThermalRepository
+import com.kakao.taxi.service.ThermalMonitorService
+
+class MainViewModel(
+    private val application: Application,
+) : AndroidViewModel(application), KoinComponent {
+    companion object {
+        private const val TAG = "MainViewModel"
+    }
+
+    private val repository: ThermalRepository by inject()
+
+    val currentThermal = repository.thermalData
+
+    val isOverlayEnabled = repository.isOverlayEnabled
+    val isNotificationEnabled = repository.isNotificationEnabled
+    val isHideFromRecents = repository.isHideFromRecents
+
+    val isOledThemeEnabled = repository.isOledThemeEnabled
+
+    val isServiceRunning = repository.isMonitoring
+
+    private val _serviceStartError = MutableStateFlow<Pair<String, String>?>(null)
+    val serviceStartError = _serviceStartError.asStateFlow()
+
+    fun startService() {
+        _serviceStartError.value = null
+
+        // 1. Check Notification Permission (Android 13+)
+        if (ContextCompat.checkSelfPermission(
+                application,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            _serviceStartError.value =
+                application.getString(R.string.error_notification_permission) to Settings.ACTION_APP_NOTIFICATION_SETTINGS
+            return
+        }
+
+        // 2. Check Overlay Permission if enabled
+        if (isOverlayEnabled.value) {
+            if (!Settings.canDrawOverlays(application)) {
+                _serviceStartError.value =
+                    application.getString(R.string.error_overlay_permission) to Settings.ACTION_MANAGE_OVERLAY_PERMISSION
+                return
+            }
+        }
+
+        val intent = Intent(application, ThermalMonitorService::class.java)
+        try {
+            application.startForegroundService(intent)
+        } catch (e: Exception) {
+            Log.e(TAG, "startService: start foreground service error", e)
+            _serviceStartError.value =
+                application.getString(
+                    R.string.error_service_start_failed,
+                    e.message
+                ) to Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        }
+    }
+
+    fun stopService(clearError: Boolean = true) {
+        val intent = Intent(application, ThermalMonitorService::class.java)
+        application.stopService(intent)
+
+        if (clearError) {
+            clearError()
+        }
+    }
+
+    fun clearError() {
+        _serviceStartError.value = null
+    }
+
+    fun setOverlayEnabled(enable: Boolean) {
+        if (enable && isServiceRunning.value) {
+            if (!Settings.canDrawOverlays(application)) {
+                _serviceStartError.value =
+                    application.getString(R.string.error_overlay_permission) to Settings.ACTION_MANAGE_OVERLAY_PERMISSION
+                stopService(false)
+            }
+        }
+        repository.setOverlayEnabled(enable)
+    }
+
+    fun setNotificationEnabled(enable: Boolean) {
+        if (enable && isServiceRunning.value) {
+            if (ContextCompat.checkSelfPermission(
+                    application,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                _serviceStartError.value =
+                    application.getString(R.string.error_notification_permission) to Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                stopService(false)
+            }
+        }
+        repository.setNotificationEnabled(enable)
+    }
+}
