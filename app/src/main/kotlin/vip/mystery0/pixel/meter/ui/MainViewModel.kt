@@ -78,6 +78,10 @@ class MainViewModel(
     }
 
     fun deleteOrder(expressId: String, partner: String?) {
+        // If deleting the tracked order, stop service immediately
+        if (repository.trackedOrderId.value == expressId) {
+            stopService()
+        }
         viewModelScope.launch {
             repository.deleteOrder(expressId, partner)
         }
