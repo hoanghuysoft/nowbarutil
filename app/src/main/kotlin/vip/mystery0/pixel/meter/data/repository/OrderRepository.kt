@@ -143,6 +143,7 @@ class OrderRepository(
         }
         _isLoading.value = true
         _error.value = null
+        val start = System.currentTimeMillis()
         try {
             val response = apiService.getOrders()
             if (response.status == "ok" && response.data != null) {
@@ -154,6 +155,10 @@ class OrderRepository(
             Log.e(TAG, "refreshOrders failed", e)
             _error.value = e.message ?: "Network error"
         } finally {
+            val elapsed = System.currentTimeMillis() - start
+            if (elapsed < 500) {
+                delay(500 - elapsed)
+            }
             _isLoading.value = false
         }
     }

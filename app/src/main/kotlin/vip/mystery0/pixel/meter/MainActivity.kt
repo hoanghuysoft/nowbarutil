@@ -202,22 +202,7 @@ fun MainScreen(
             onRefresh = { viewModel.refreshOrders() },
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
-            indicator = {
-                // Use M3 Expressive LoadingIndicator as the pull-to-refresh indicator
-                AnimatedVisibility(
-                    visible = isLoading,
-                    enter = fadeIn(),
-                    exit = fadeOut(),
-                    modifier = Modifier.align(Alignment.TopCenter)
-                ) {
-                    LoadingIndicator(
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .padding(top = 8.dp)
-                    )
-                }
-            }
+                .padding(padding)
         ) {
             if (apiKey.isBlank()) {
                 // No API key configured
@@ -300,6 +285,16 @@ fun MainScreen(
                     // Bottom spacing for FAB
                     item { Spacer(modifier = Modifier.height(140.dp)) }
                 }
+            }
+
+            // Initial loading overlay
+            AnimatedVisibility(
+                visible = isLoading && orders.isEmpty(),
+                enter = fadeIn(),
+                exit = fadeOut(),
+                modifier = Modifier.align(Alignment.Center)
+            ) {
+                LoadingIndicator()
             }
         }
     }
