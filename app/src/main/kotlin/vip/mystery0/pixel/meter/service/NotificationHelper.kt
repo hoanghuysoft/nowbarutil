@@ -169,9 +169,7 @@ class NotificationHelper(private val context: Context) {
             textPaint.textSize = size * textSize
             unitPaint.textSize = size * unitSize
 
-            // Use first 2-3 chars as abbreviation for the icon
-            val abbr = getStatusAbbreviation(statusText)
-            canvas.drawText(abbr, cx, size * 0.55f, textPaint)
+            canvas.drawText(statusText, cx, size * 0.55f, textPaint)
             canvas.drawText("📦", cx, size * 0.95f, unitPaint)
 
             val smallIcon = IconCompat.createWithBitmap(bitmap)
@@ -183,23 +181,5 @@ class NotificationHelper(private val context: Context) {
         }
 
         return builder.build()
-    }
-
-    /**
-     * Creates a short abbreviation from an order status for the bitmap icon.
-     * Vietnamese statuses are common so we handle them specifically.
-     */
-    private fun getStatusAbbreviation(status: String): String {
-        return when {
-            status.contains("thành công", ignoreCase = true) || status.contains("成功", ignoreCase = true) -> "✓"
-            status.contains("giao hàng", ignoreCase = true) || status.contains("派送", ignoreCase = true) || status.contains("派件", ignoreCase = true) -> "🚚"
-            status.contains("trung chuyển", ignoreCase = true) || status.contains("运输", ignoreCase = true) || status.contains("中转", ignoreCase = true) -> "→"
-            status.contains("kho", ignoreCase = true) || status.contains("仓库", ignoreCase = true) || status.contains("分拨", ignoreCase = true) -> "📦"
-            status.contains("lấy hàng", ignoreCase = true) || status.contains("取件", ignoreCase = true) || status.contains("揽收", ignoreCase = true) -> "↑"
-            status.contains("chuẩn bị", ignoreCase = true) || status.contains("准备", ignoreCase = true) -> "⏳"
-            status.contains("delivered", ignoreCase = true) -> "✓"
-            status.contains("transit", ignoreCase = true) -> "→"
-            else -> status.take(2).uppercase()
-        }
     }
 }
