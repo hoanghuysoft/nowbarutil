@@ -85,6 +85,7 @@
     <string name="action_save">Save</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_back">Back</string>
+    <string name="title_order_detail">Order Detail</string>
 
     <!-- Misc -->
     <string name="color_picker_title">Select Color</string>
