@@ -9,6 +9,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -54,6 +64,8 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -95,6 +107,12 @@ import com.kakao.taxi.ui.theme.PixelPulseTheme
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
+// Order Card Shapes
+val topShape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp, bottomStart = 4.dp, bottomEnd = 4.dp)
+val middleShape = RoundedCornerShape(4.dp)
+val bottomShape = RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp, bottomStart = 20.dp, bottomEnd = 20.dp)
+val singleShape = RoundedCornerShape(20.dp)
 
 class MainActivity : ComponentActivity() {
 
@@ -173,19 +191,26 @@ fun MainScreen(
                 ),
                 actions = {
                     if (isMonitoring) {
-                        IconButton(onClick = { viewModel.stopService() }) {
-                            Icon(
-                                Icons.Filled.Stop,
-                                contentDescription = stringResource(R.string.action_stop),
-                                tint = MaterialTheme.colorScheme.error
+                        FilledTonalIconButton(
+                            onClick = { viewModel.stopService() },
+                            shapes = IconButtonDefaults.shapes(),
+                            colors = IconButtonDefaults.filledTonalIconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.errorContainer,
+                                contentColor = MaterialTheme.colorScheme.onErrorContainer
                             )
+                        ) {
+                            Icon(Icons.Filled.Stop, contentDescription = stringResource(R.string.action_stop))
                         }
                     }
-                    IconButton(onClick = onOpenSettings) {
-                        Icon(
-                            Icons.Filled.Settings,
-                            contentDescription = stringResource(R.string.title_settings)
+                    FilledTonalIconButton(
+                        onClick = onOpenSettings,
+                        shapes = IconButtonDefaults.shapes(),
+                        colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                            contentColor = MaterialTheme.colorScheme.onSurface
                         )
+                    ) {
+                        Icon(Icons.Filled.Settings, contentDescription = stringResource(R.string.title_settings))
                     }
                 }
             )
@@ -262,7 +287,7 @@ fun MainScreen(
             } else {
                 LazyColumn(
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
                     // Tracked order banner
                     if (trackedOrderId.isNotBlank()) {
@@ -271,14 +296,27 @@ fun MainScreen(
                                 trackedOrderId = trackedOrderId,
                                 isMonitoring = isMonitoring
                             )
+                            Spacer(modifier = Modifier.height(14.dp))
                         }
                     }
 
-                    items(orders, key = { it.expressId }) { order ->
+                    items(orders.size, key = { orders[it].expressId }) { index ->
+                        val order = orders[index]
+                        val shape = if (orders.size == 1) {
+                            singleShape
+                        } else if (index == 0) {
+                            topShape
+                        } else if (index == orders.lastIndex) {
+                            bottomShape
+                        } else {
+                            middleShape
+                        }
+
                         OrderCard(
                             order = order,
                             isTracked = order.expressId == trackedOrderId,
                             isServiceRunning = isMonitoring,
+                            shape = shape,
                             onTap = { viewModel.showOrderDetail(order) },
                             onTrack = { viewModel.toggleTracking(order) },
                             onDelete = { viewModel.deleteOrder(order.expressId, order.partner) }
@@ -326,7 +364,14 @@ fun MainScreen(
                 TopAppBar(
                     title = { Text(stringResource(R.string.title_order_detail)) },
                     navigationIcon = {
-                        IconButton(onClick = { viewModel.hideBottomSheet() }) {
+                        FilledTonalIconButton(
+                            onClick = { viewModel.hideBottomSheet() },
+                            shapes = IconButtonDefaults.shapes(),
+                            colors = IconButtonDefaults.filledTonalIconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                                contentColor = MaterialTheme.colorScheme.onSurface
+                            )
+                        ) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
                         }
                     }
@@ -399,16 +444,55 @@ fun OrderCard(
     order: Order,
     isTracked: Boolean,
     isServiceRunning: Boolean = false,
+    shape: RoundedCornerShape = singleShape,
     onTap: () -> Unit,
     onTrack: () -> Unit,
     onDelete: () -> Unit
 ) {
     val isActivelyTracking = isTracked && isServiceRunning
+
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val pressProgress by animateFloatAsState(
+        targetValue = if (isPressed) 1f else 0f,
+        animationSpec = tween(durationMillis = 200),
+        label = "press"
+    )
+    val animatedShape = remember(shape, pressProgress) {
+        object : Shape {
+            override fun createOutline(size: Size, layoutDirection: LayoutDirection, density: Density): Outline {
+                val targetPx = with(density) { 24.dp.toPx() } // Target squishy radius
+                fun lerp(start: Float, stop: Float, fraction: Float) =
+                    (1 - fraction) * start + fraction * stop
+
+                val ts = lerp(shape.topStart.toPx(size, density), targetPx, pressProgress)
+                val te = lerp(shape.topEnd.toPx(size, density), targetPx, pressProgress)
+                val bs = lerp(shape.bottomStart.toPx(size, density), targetPx, pressProgress)
+                val be = lerp(shape.bottomEnd.toPx(size, density), targetPx, pressProgress)
+
+                return Outline.Rounded(
+                    androidx.compose.ui.geometry.RoundRect(
+                        rect = androidx.compose.ui.geometry.Rect(0f, 0f, size.width, size.height),
+                        topLeft = androidx.compose.ui.geometry.CornerRadius(ts),
+                        topRight = androidx.compose.ui.geometry.CornerRadius(te),
+                        bottomRight = androidx.compose.ui.geometry.CornerRadius(be),
+                        bottomLeft = androidx.compose.ui.geometry.CornerRadius(bs)
+                    )
+                )
+            }
+        }
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onTap),
-        shape = RoundedCornerShape(12.dp),
+            .clip(animatedShape)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = LocalIndication.current,
+                onClick = onTap
+            ),
+        shape = animatedShape,
         colors = CardDefaults.cardColors(
             containerColor = if (isTracked) MaterialTheme.colorScheme.secondaryContainer
             else MaterialTheme.colorScheme.surfaceContainerHigh

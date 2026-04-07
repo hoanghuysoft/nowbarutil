@@ -11,13 +11,20 @@ Pixel Meter 严格遵循 Modern Android Development (MAD) 指南，全面采用 
     - 必须启用 `DynamicColors.applyToActivitiesIfAvailable(this)`。
     - UI 颜色直接映射系统壁纸色调，确保与原生系统（Settings, Quick Settings）视觉一致。
 - **主要控件**: 使用 M3 标准组件 (`Scaffold`, `TopAppBar`, `Switch`, `Card`, `NavigationBar` 等)。
+- **Expressive Interactions (Squishy & Morphing UI)**:
+  - **Buttons**: Action buttons (e.g. `FilledTonalIconButton`) MUST use `shapes = IconButtonDefaults.shapes()` with `@OptIn(ExperimentalMaterial3ExpressiveApi::class)`. This activates the native Material 3 Expressive morphing interaction (squeezing from a circle into a rounded rectangle on press).
+  - **Card Grouping (Squishy Cards)**:
+    - Settings items and Lists (like `OrderCard`) use a visually unified "squishy" grouped card design. Lists reduce internal visual padding using `Arrangement.spacedBy(2.dp)`.
+    - Components apply dynamic `RoundedCornerShape`s based on their position in the list: `topShape` (20dp top, 4dp bottom), `middleShape` (4dp all), `bottomShape` (4dp top, 20dp bottom), or `singleShape` (20dp all).
+    - **Interaction Logic**: Cards animate their shape when pressed, expanding their normal bounds dynamically to a wider 24dp corner radii using `animateFloatAsState` injected into a custom `object : Shape` Outline.
 - **设置页面 (Settings)**:
-    - 使用 `me.zhanghai.compose.preference` 构建原生风格的设置列表。
+  - Built explicitly with custom composed `SettingsItemCard` components instead of 3rd party preference lists (e.g. `zhanghai`) to preserve dynamic shape animations.
   - **分块明确**:
-      - **General**: 基础采样间隔与权限状态。
-      - **Background**: 包含电池优化、最近任务隐藏等保活相关设置。
-      - **Notification/Overlay**: 独立配置块。
-    - 使用 `com.github.skydoves:colorpicker-compose` 实现颜色选择器。
+    - **API**: API keys and polling.
+    - **General**: OLED themes and baseline setup.
+    - **Background**: 电池优化、最近任务隐藏等.
+    - **Notification/Overlay**: 独立配置块.
+  - 使用 `com.github.skydoves:colorpicker-compose` 实现颜色选择器.
 
 ## 2. 通知栏动态图标 (Notification Icon)
 
