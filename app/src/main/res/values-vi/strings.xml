@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Đơn hàng Trực tiếp</string>
     <string name="title_settings">Cài đặt</string>
 
     <!-- Notification -->

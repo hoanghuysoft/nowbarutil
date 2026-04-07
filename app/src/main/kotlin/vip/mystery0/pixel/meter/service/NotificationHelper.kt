@@ -15,6 +15,7 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.graphics.toColorInt
 import com.kakao.taxi.MainActivity
 import com.kakao.taxi.R
 import kotlin.math.roundToInt
@@ -122,6 +123,7 @@ class NotificationHelper(private val context: Context) {
             .setVisibility(NotificationCompat.VISIBILITY_SECRET)
             .setSmallIcon(R.drawable.ic_speed)
             .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+            .setColor("#ff4600".toColorInt())
 
         if (useCustomColor) {
             builder.setColor(color)
