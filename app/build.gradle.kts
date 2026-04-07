@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.material.icons.core)
     implementation(libs.material.icons.extended)
+    implementation(libs.androidx.material3)
 
     // Feature Dependencies
     implementation(libs.androidx.palette.ktx)

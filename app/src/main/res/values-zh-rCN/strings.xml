@@ -59,7 +59,6 @@
     <string name="tile_desc_inactive">已关闭</string>
 
     <!-- Main Screen -->
-    <string name="main_title">Nowbar 追踪器</string>
     <string name="action_refresh">刷新</string>
     <string name="action_track">追踪</string>
     <string name="action_stop">停止</string>

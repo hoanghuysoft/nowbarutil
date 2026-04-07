@@ -59,7 +59,6 @@
     <string name="tile_desc_inactive">Không hoạt động</string>
 
     <!-- Main Screen -->
-    <string name="main_title">Theo dõi Nowbar</string>
     <string name="action_refresh">Làm mới</string>
     <string name="action_track">Theo dõi</string>
     <string name="action_stop">Dừng</string>
