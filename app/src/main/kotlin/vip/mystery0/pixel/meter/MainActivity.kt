@@ -37,14 +37,15 @@ import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.GpsFixed
 import androidx.compose.material.icons.filled.GpsNotFixed
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.PullToRefreshBox
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -60,6 +61,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -130,7 +132,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun MainScreen(
     viewModel: MainViewModel = viewModel(),
@@ -176,11 +178,11 @@ fun MainScreen(
                             )
                         }
                     }
-                    IconButton(onClick = { viewModel.refreshOrders() }) {
-                        Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.action_refresh))
-                    }
                     IconButton(onClick = onOpenSettings) {
-                        Icon(Icons.Filled.Settings, contentDescription = stringResource(R.string.title_settings))
+                        Icon(
+                            Icons.Filled.Settings,
+                            contentDescription = stringResource(R.string.title_settings)
+                        )
                     }
                 }
             )
@@ -195,10 +197,27 @@ fun MainScreen(
             )
         }
     ) { padding ->
-        Box(
+        PullToRefreshBox(
+            isRefreshing = isLoading,
+            onRefresh = { viewModel.refreshOrders() },
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(padding),
+            indicator = {
+                // Use M3 Expressive LoadingIndicator as the pull-to-refresh indicator
+                AnimatedVisibility(
+                    visible = isLoading,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                    modifier = Modifier.align(Alignment.TopCenter)
+                ) {
+                    LoadingIndicator(
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(top = 8.dp)
+                    )
+                }
+            }
         ) {
             if (apiKey.isBlank()) {
                 // No API key configured
@@ -282,16 +301,6 @@ fun MainScreen(
                     item { Spacer(modifier = Modifier.height(140.dp)) }
                 }
             }
-
-            // Loading overlay
-            AnimatedVisibility(
-                visible = isLoading,
-                enter = fadeIn(),
-                exit = fadeOut(),
-                modifier = Modifier.align(Alignment.Center)
-            ) {
-                CircularProgressIndicator()
-            }
         }
     }
 
@@ -322,7 +331,7 @@ fun MainScreen(
                         .height(200.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator()
+                    LoadingIndicator()
                 }
             }
         }
@@ -451,7 +460,9 @@ fun OrderCard(
                 IconButton(onClick = onTrack, modifier = Modifier.size(36.dp)) {
                     Icon(
                         if (isActivelyTracking) Icons.Filled.GpsFixed else Icons.Filled.GpsNotFixed,
-                        contentDescription = if (isActivelyTracking) stringResource(R.string.action_stop) else stringResource(R.string.action_track),
+                        contentDescription = if (isActivelyTracking) stringResource(R.string.action_stop) else stringResource(
+                            R.string.action_track
+                        ),
                         tint = if (isActivelyTracking) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
