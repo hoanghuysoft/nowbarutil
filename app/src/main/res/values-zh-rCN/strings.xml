@@ -51,7 +51,7 @@
     <!-- Settings: About -->
     <string name="settings_category_about">关于</string>
     <string name="settings_app_version">应用版本</string>
-    <string name="settings_github">GitHub</string>
+    <string name="settings_github">Donate</string>
 
     <!-- Quick Settings Tile -->
     <string name="tile_notification_label">订单追踪</string>

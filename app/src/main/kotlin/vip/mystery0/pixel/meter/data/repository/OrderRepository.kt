@@ -244,6 +244,11 @@ class OrderRepository(
         _isMonitoring.value = true
         trackingJob?.cancel()
 
+        // Clear any stale detail from a previously tracked order so the UI / notification
+        // does not briefly show the wrong status while the first poll is in flight.
+        _trackedOrder.value = null
+        _trackedOrderSummary.value = null
+
         // Find the partner from our cached order list for faster API lookups
         val partner = _orders.value.find { it.expressId == orderId }?.partner
 
@@ -270,6 +275,9 @@ class OrderRepository(
         trackingJob?.cancel()
         trackingJob = null
         _isMonitoring.value = false
+        // Clear cached detail so it is not stale the next time tracking starts.
+        _trackedOrder.value = null
+        _trackedOrderSummary.value = null
         Log.i(TAG, "Tracking stopped")
     }
 
@@ -281,7 +289,16 @@ class OrderRepository(
     // ── Preference Setters ──
 
     fun setApiKey(key: String) { scope.launch { dataStoreRepository.setApiKey(key) } }
-    fun setTrackedOrderId(id: String) { scope.launch { dataStoreRepository.setTrackedOrderId(id) } }
+
+    /**
+     * Updates the tracked order ID in-memory immediately so that [startTracking] always
+     * reads the correct ID even when it is called right after this setter (before DataStore
+     * has had a chance to emit the persisted value).
+     */
+    fun setTrackedOrderId(id: String) {
+        _trackedOrderId.value = id          // immediate in-memory update (avoids race with startTracking)
+        scope.launch { dataStoreRepository.setTrackedOrderId(id) }
+    }
     fun setPollingInterval(interval: Long) { scope.launch { dataStoreRepository.setPollingInterval(interval.coerceAtLeast(10_000L)) } }
     fun setNotificationEnabled(enabled: Boolean) { scope.launch { dataStoreRepository.setNotificationEnabled(enabled) } }
     fun setLiveUpdateEnabled(enabled: Boolean) { scope.launch { dataStoreRepository.setLiveUpdateEnabled(enabled) } }

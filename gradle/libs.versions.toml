@@ -2,10 +2,10 @@
 agp = "9.1.0"
 kotlin = "2.3.20"
 
-app-version = "26.0.0"
-android-compileSdk = "36"
+app-version = "26.0.2"
+android-compileSdk = "37"
 android-minSdk = "31"
-android-targetSdk = "36"
+android-targetSdk = "37"
 
 coreKtx = "1.18.0"
 lifecycleRuntimeKtx = "2.10.0"

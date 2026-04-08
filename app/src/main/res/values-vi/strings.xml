@@ -10,9 +10,9 @@
     <string name="settings_category_api">Cấu hình API</string>
     <string name="settings_api_key_title">Khóa API</string>
     <string name="settings_api_key_not_configured">Chưa cấu hình — nhấn để thiết lập</string>
-    <string name="settings_polling_interval_title">Khoảng thời gian Polling</string>
+    <string name="settings_polling_interval_title">Tần suất kiểm tra</string>
     <string name="settings_polling_interval_desc">Tần suất kiểm tra trạng thái đơn hàng</string>
-    <string name="settings_api_key_dialog_desc">Nhập khóa API express.io.vn của bạn</string>
+    <string name="settings_api_key_dialog_desc">Nhập khóa API trên trang express.io.vn của bạn</string>
     <string name="settings_api_key_label">X-API-Key</string>
 
     <!-- Settings: General -->
@@ -51,10 +51,10 @@
     <!-- Settings: About -->
     <string name="settings_category_about">Giới thiệu</string>
     <string name="settings_app_version">Phiên bản Ứng dụng</string>
-    <string name="settings_github">GitHub</string>
+    <string name="settings_github">Donate nếu bạn thích ứng dụng</string>
 
     <!-- Quick Settings Tile -->
-    <string name="tile_notification_label">Theo dõi Đơn hàng</string>
+    <string name="tile_notification_label">Theo dõi đơn hàng</string>
     <string name="tile_desc_active">Đang hoạt động</string>
     <string name="tile_desc_inactive">Không hoạt động</string>
 
@@ -64,7 +64,7 @@
     <string name="action_stop">Dừng</string>
     <string name="action_add_order">Thêm Đơn hàng</string>
     <string name="error_api_key_required">Yêu cầu Khóa API</string>
-    <string name="error_api_key_required_desc">Vui lòng đi đến Cài đặt và nhập khóa API express.io.vn của bạn để bắt đầu.</string>
+    <string name="error_api_key_required_desc">Hãy đến trang express.io.vn và làm theo hướng dẫn trên web để lấy API key. Sau đó đi đến Cài đặt và nhập khóa API của bạn để bắt đầu.</string>
     <string name="action_open_settings">Mở Cài đặt</string>
     <string name="empty_orders_title">Không có Đơn hàng</string>
     <string name="empty_orders_desc">Nhấn vào nút + để thêm đơn hàng theo dõi đầu tiên của bạn.</string>
@@ -85,6 +85,7 @@
     <string name="action_back">Quay lại</string>
 
     <!-- Misc -->
+    <string name="title_order_detail">Chi tiết đơn hàng</string>
     <string name="color_picker_title">Chọn màu</string>
     <string name="error_unknown">Lỗi không xác định</string>
     <string name="error_notification_permission">Yêu cầu quyền thông báo</string>

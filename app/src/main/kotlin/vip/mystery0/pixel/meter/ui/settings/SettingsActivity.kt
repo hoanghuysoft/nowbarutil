@@ -290,7 +290,7 @@ fun ApiSection(viewModel: SettingsViewModel) {
         Slider(
             value = pollingSeconds,
             onValueChange = { viewModel.setPollingInterval((it * 1000).toLong()) },
-            valueRange = 10f..120f,
+            valueRange = 30f..120f,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -593,12 +593,12 @@ fun AboutSection() {
     Spacer(modifier = Modifier.height(2.dp))
     
     SettingsItemCard(
-        icon = Icons.Default.Code,
+        icon = Icons.Default.Coffee,
         title = stringResource(R.string.settings_github),
-        subtitle = "https://github.com/realMoai/NowbarMeter",
+        subtitle = "https://ko-fi.com/koshiellen",
         containerColor = Color(0xFFFBE9E7),
         iconColor = Color(0xFFD84315),
         shape = bottomShape,
-        onClick = { uriHandler.openUri("https://github.com/realMoai/NowbarMeter") }
+        onClick = { uriHandler.openUri("https://ko-fi.com/koshiellen") }
     )
 }

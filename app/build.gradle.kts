@@ -19,7 +19,7 @@ kotlin {
 android {
     namespace = packageName
     compileSdk {
-        version = release(libs.versions.android.compileSdk.get().toInt())
+        version = release(37)
     }
 
     defaultConfig {
